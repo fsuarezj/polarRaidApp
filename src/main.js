@@ -22,7 +22,7 @@ import AppStyles from './assets/static/sass/main.scss'
 import Routes from './routes.js'
 
 // Import App Component
-import App from './main.vue'
+import App from './app.vue'
 
 // Init F7 Vue Plugin
 Vue.use(Framework7Vue)
