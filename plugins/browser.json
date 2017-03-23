@@ -12,6 +12,9 @@
         },
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.elPueblin.polarRaidTracking"
+        },
+        "cordova-plugin-bluetoothle": {
+            "PACKAGE_NAME": "com.elPueblin.polarRaidTracking"
         }
     },
     "dependent_plugins": {
