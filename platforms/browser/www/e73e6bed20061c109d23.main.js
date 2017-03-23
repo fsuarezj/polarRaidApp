@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -213,7 +213,7 @@ function toComment(sourceMap) {
   return '/*# ' + data + ' */';
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../buffer/index.js */ 16).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../buffer/index.js */ 17).Buffer))
 
 /***/ }),
 /* 2 */
@@ -240,7 +240,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(/*! ./listToStyles */ 20)
+var listToStyles = __webpack_require__(/*! ./listToStyles */ 21)
 
 /*
 type StyleObject = {
@@ -27822,15 +27822,15 @@ module.exports = Vue$3;
 /* harmony default export */ __webpack_exports__["a"] = ([
 	{
 		path: '/about/',
-		component: __webpack_require__(/*! ./assets/vue/pages/about.vue */ 22)
+		component: __webpack_require__(/*! ./assets/vue/pages/about.vue */ 23)
 	},
 	{
 		path: '/form/',
-		component: __webpack_require__(/*! ./assets/vue/pages/form.vue */ 24)
+		component: __webpack_require__(/*! ./assets/vue/pages/form.vue */ 25)
 	},
 	{
 		path: '/dynamic-route/blog/:blogId/post/:postId/',
-		component: __webpack_require__(/*! ./assets/vue/pages/dynamic-route.vue */ 23)
+		component: __webpack_require__(/*! ./assets/vue/pages/dynamic-route.vue */ 24)
 	}
 ]);
 
@@ -27848,7 +27848,7 @@ module.exports = Vue$3;
 var content = __webpack_require__(/*! !../../../../~/css-loader!../../../../~/sass-loader/lib/loader.js!./main.scss */ 12);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(/*! ../../../../~/style-loader/addStyles.js */ 19)(content, {});
+var update = __webpack_require__(/*! ../../../../~/style-loader/addStyles.js */ 20)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -27875,9 +27875,9 @@ if(false) {
 
 var Component = __webpack_require__(/*! ../~/vue-loader/lib/component-normalizer */ 0)(
   /* script */
-  __webpack_require__(/*! !!../~/vue-loader/lib/selector?type=script&index=0!./App.vue */ 27),
+  __webpack_require__(/*! !!../~/vue-loader/lib/selector?type=script&index=0!./App.vue */ 29),
   /* template */
-  __webpack_require__(/*! !../~/vue-loader/lib/template-compiler/index?{"id":"data-v-1c5b8368"}!../~/vue-loader/lib/selector?type=template&index=0!./App.vue */ 33),
+  __webpack_require__(/*! !../~/vue-loader/lib/template-compiler/index?{"id":"data-v-1c5b8368"}!../~/vue-loader/lib/selector?type=template&index=0!./App.vue */ 36),
   /* scopeId */
   null,
   /* cssModules */
@@ -27945,9 +27945,9 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /* 14 */
 /* unknown exports provided */
 /* all exports used */
-/*!**********************************************************************************************************************************************************************************************************!*\
-  !*** ./~/css-loader!./~/vue-loader/lib/style-compiler?{"id":"data-v-7a5073e9","scoped":false,"hasInlineConfig":false}!./~/vue-loader/lib/selector.js?type=styles&index=0!./src/components/TrackInfo.vue ***!
-  \**********************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************!*\
+  !*** ./~/css-loader!./~/vue-loader/lib/style-compiler?{"id":"data-v-5bd52e48","scoped":false,"hasInlineConfig":false}!./~/vue-loader/lib/selector.js?type=styles&index=0!./src/components/GPSInfo.vue ***!
+  \********************************************************************************************************************************************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-base.js */ 1)(undefined);
@@ -27955,13 +27955,32 @@ exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-ba
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
 
 /***/ }),
 /* 15 */
+/* unknown exports provided */
+/* all exports used */
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./~/css-loader!./~/vue-loader/lib/style-compiler?{"id":"data-v-c47b8ee4","scoped":false,"hasInlineConfig":false}!./~/vue-loader/lib/selector.js?type=styles&index=0!./src/components/GPSTracker.vue ***!
+  \***********************************************************************************************************************************************************************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-base.js */ 1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 16 */
 /* unknown exports provided */
 /* all exports used */
 /*!******************************!*\
@@ -28087,7 +28106,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /* unknown exports provided */
 /* all exports used */
 /*!***************************!*\
@@ -28106,9 +28125,9 @@ function fromByteArray (uint8) {
 
 
 
-var base64 = __webpack_require__(/*! base64-js */ 15)
-var ieee754 = __webpack_require__(/*! ieee754 */ 17)
-var isArray = __webpack_require__(/*! isarray */ 18)
+var base64 = __webpack_require__(/*! base64-js */ 16)
+var ieee754 = __webpack_require__(/*! ieee754 */ 18)
+var isArray = __webpack_require__(/*! isarray */ 19)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -29889,7 +29908,7 @@ function isnan (val) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../webpack/buildin/global.js */ 3)))
 
 /***/ }),
-/* 17 */
+/* 18 */
 /* unknown exports provided */
 /* all exports used */
 /*!****************************!*\
@@ -29984,7 +30003,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /* unknown exports provided */
 /* all exports used */
 /*!****************************!*\
@@ -30000,7 +30019,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /* unknown exports provided */
 /* all exports used */
 /*!*************************************!*\
@@ -30257,7 +30276,7 @@ function updateLink(linkElement, obj) {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /* unknown exports provided */
 /* all exports used */
 /*!************************************************!*\
@@ -30295,7 +30314,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /* unknown exports provided */
 /* all exports used */
 /*!*********************!*\
@@ -30368,7 +30387,7 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /* unknown exports provided */
 /* all exports used */
 /*!****************************************!*\
@@ -30378,9 +30397,9 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 var Component = __webpack_require__(/*! ../../../../~/vue-loader/lib/component-normalizer */ 0)(
   /* script */
-  __webpack_require__(/*! !!../../../../~/vue-loader/lib/selector?type=script&index=0!./about.vue */ 28),
+  __webpack_require__(/*! !!../../../../~/vue-loader/lib/selector?type=script&index=0!./about.vue */ 30),
   /* template */
-  __webpack_require__(/*! !../../../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-5d62d056"}!../../../../~/vue-loader/lib/selector?type=template&index=0!./about.vue */ 35),
+  __webpack_require__(/*! !../../../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-5d62d056"}!../../../../~/vue-loader/lib/selector?type=template&index=0!./about.vue */ 39),
   /* scopeId */
   null,
   /* cssModules */
@@ -30407,7 +30426,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /* unknown exports provided */
 /* all exports used */
 /*!************************************************!*\
@@ -30417,9 +30436,9 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(/*! ../../../../~/vue-loader/lib/component-normalizer */ 0)(
   /* script */
-  __webpack_require__(/*! !!../../../../~/vue-loader/lib/selector?type=script&index=0!./dynamic-route.vue */ 29),
+  __webpack_require__(/*! !!../../../../~/vue-loader/lib/selector?type=script&index=0!./dynamic-route.vue */ 31),
   /* template */
-  __webpack_require__(/*! !../../../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-f5bcbff8"}!../../../../~/vue-loader/lib/selector?type=template&index=0!./dynamic-route.vue */ 38),
+  __webpack_require__(/*! !../../../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-f5bcbff8"}!../../../../~/vue-loader/lib/selector?type=template&index=0!./dynamic-route.vue */ 42),
   /* scopeId */
   null,
   /* cssModules */
@@ -30446,7 +30465,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /* unknown exports provided */
 /* all exports used */
 /*!***************************************!*\
@@ -30456,9 +30475,9 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(/*! ../../../../~/vue-loader/lib/component-normalizer */ 0)(
   /* script */
-  __webpack_require__(/*! !!../../../../~/vue-loader/lib/selector?type=script&index=0!./form.vue */ 30),
+  __webpack_require__(/*! !!../../../../~/vue-loader/lib/selector?type=script&index=0!./form.vue */ 32),
   /* template */
-  __webpack_require__(/*! !../../../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-c4be4aea"}!../../../../~/vue-loader/lib/selector?type=template&index=0!./form.vue */ 37),
+  __webpack_require__(/*! !../../../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-c4be4aea"}!../../../../~/vue-loader/lib/selector?type=template&index=0!./form.vue */ 41),
   /* scopeId */
   null,
   /* cssModules */
@@ -30485,7 +30504,93 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 25 */
+/* 26 */
+/* unknown exports provided */
+/* exports used: default */
+/*!************************************!*\
+  !*** ./src/components/GPSInfo.vue ***!
+  \************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(/*! !vue-style-loader!css-loader!../../~/vue-loader/lib/style-compiler/index?{"id":"data-v-5bd52e48","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector?type=styles&index=0!./GPSInfo.vue */ 44)
+
+var Component = __webpack_require__(/*! ../../~/vue-loader/lib/component-normalizer */ 0)(
+  /* script */
+  __webpack_require__(/*! !!../../~/vue-loader/lib/selector?type=script&index=0!./GPSInfo.vue */ 33),
+  /* template */
+  __webpack_require__(/*! !../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-5bd52e48"}!../../~/vue-loader/lib/selector?type=template&index=0!./GPSInfo.vue */ 38),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/home/ferda/informatica/development/polarRaid/polarRaidTracking/src/components/GPSInfo.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] GPSInfo.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5bd52e48", Component.options)
+  } else {
+    hotAPI.reload("data-v-5bd52e48", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 27 */
+/* unknown exports provided */
+/* exports used: default */
+/*!***************************************!*\
+  !*** ./src/components/GPSTracker.vue ***!
+  \***************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(/*! !vue-style-loader!css-loader!../../~/vue-loader/lib/style-compiler/index?{"id":"data-v-c47b8ee4","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector?type=styles&index=0!./GPSTracker.vue */ 45)
+
+var Component = __webpack_require__(/*! ../../~/vue-loader/lib/component-normalizer */ 0)(
+  /* script */
+  __webpack_require__(/*! !!../../~/vue-loader/lib/selector?type=script&index=0!./GPSTracker.vue */ 34),
+  /* template */
+  __webpack_require__(/*! !../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-c47b8ee4"}!../../~/vue-loader/lib/selector?type=template&index=0!./GPSTracker.vue */ 40),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/home/ferda/informatica/development/polarRaid/polarRaidTracking/src/components/GPSTracker.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] GPSTracker.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c47b8ee4", Component.options)
+  } else {
+    hotAPI.reload("data-v-c47b8ee4", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 28 */
 /* unknown exports provided */
 /* exports used: default */
 /*!**************************************!*\
@@ -30495,13 +30600,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(/*! !vue-style-loader!css-loader!../../~/vue-loader/lib/style-compiler/index?{"id":"data-v-48df88e6","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector?type=styles&index=0!./LeftPanel.vue */ 39)
+__webpack_require__(/*! !vue-style-loader!css-loader!../../~/vue-loader/lib/style-compiler/index?{"id":"data-v-48df88e6","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector?type=styles&index=0!./LeftPanel.vue */ 43)
 
 var Component = __webpack_require__(/*! ../../~/vue-loader/lib/component-normalizer */ 0)(
   /* script */
-  __webpack_require__(/*! !!../../~/vue-loader/lib/selector?type=script&index=0!./LeftPanel.vue */ 31),
+  __webpack_require__(/*! !!../../~/vue-loader/lib/selector?type=script&index=0!./LeftPanel.vue */ 35),
   /* template */
-  __webpack_require__(/*! !../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-48df88e6"}!../../~/vue-loader/lib/selector?type=template&index=0!./LeftPanel.vue */ 34),
+  __webpack_require__(/*! !../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-48df88e6"}!../../~/vue-loader/lib/selector?type=template&index=0!./LeftPanel.vue */ 37),
   /* scopeId */
   null,
   /* cssModules */
@@ -30528,50 +30633,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 26 */
-/* unknown exports provided */
-/* exports used: default */
-/*!**************************************!*\
-  !*** ./src/components/TrackInfo.vue ***!
-  \**************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(/*! !vue-style-loader!css-loader!../../~/vue-loader/lib/style-compiler/index?{"id":"data-v-7a5073e9","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector?type=styles&index=0!./TrackInfo.vue */ 40)
-
-var Component = __webpack_require__(/*! ../../~/vue-loader/lib/component-normalizer */ 0)(
-  /* script */
-  __webpack_require__(/*! !!../../~/vue-loader/lib/selector?type=script&index=0!./TrackInfo.vue */ 32),
-  /* template */
-  __webpack_require__(/*! !../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-7a5073e9"}!../../~/vue-loader/lib/selector?type=template&index=0!./TrackInfo.vue */ 36),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/home/ferda/informatica/development/polarRaid/polarRaidTracking/src/components/TrackInfo.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] TrackInfo.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7a5073e9", Component.options)
-  } else {
-    hotAPI.reload("data-v-7a5073e9", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 27 */
+/* 29 */
 /* exports provided: default */
 /* all exports used */
 /*!************************************************************************!*\
@@ -30581,10 +30643,12 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LeftPanel_vue__ = __webpack_require__(/*! ./components/LeftPanel.vue */ 25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LeftPanel_vue__ = __webpack_require__(/*! ./components/LeftPanel.vue */ 28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LeftPanel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_LeftPanel_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_TrackInfo_vue__ = __webpack_require__(/*! ./components/TrackInfo.vue */ 26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_TrackInfo_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_TrackInfo_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_GPSInfo_vue__ = __webpack_require__(/*! ./components/GPSInfo.vue */ 26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_GPSInfo_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_GPSInfo_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_GPSTracker_vue__ = __webpack_require__(/*! ./components/GPSTracker.vue */ 27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_GPSTracker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_GPSTracker_vue__);
 //
 //
 //
@@ -30635,6 +30699,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
 
 
 
@@ -30642,13 +30708,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 	components: {
 		'pr-left-panel': __WEBPACK_IMPORTED_MODULE_0__components_LeftPanel_vue___default.a,
-		'pr-track-info': __WEBPACK_IMPORTED_MODULE_1__components_TrackInfo_vue___default.a
+		'pr-gps-info': __WEBPACK_IMPORTED_MODULE_1__components_GPSInfo_vue___default.a,
+		'pr-gps-tracker': __WEBPACK_IMPORTED_MODULE_2__components_GPSTracker_vue___default.a
+	},
+	data() {
+		return {
+			position: {
+				coords: NaN
+			},
+			trackGPS: false
+		}
+	},
+	computed: {
+		gpsAction() {
+			if (this.trackGPS) {
+				return "Stop"
+			} else {
+				return "Start"
+			}
+		}
+	},
+	methods: {
+		changePosition(position) {
+			this.position = position
+		}
 	}
 });
 
 
 /***/ }),
-/* 28 */
+/* 30 */
 /* exports provided: default */
 /* all exports used */
 /*!*******************************************************************************************!*\
@@ -30675,7 +30764,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 29 */
+/* 31 */
 /* exports provided: default */
 /* all exports used */
 /*!***************************************************************************************************!*\
@@ -30718,7 +30807,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 30 */
+/* 32 */
 /* exports provided: default */
 /* all exports used */
 /*!******************************************************************************************!*\
@@ -30862,7 +30951,107 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 31 */
+/* 33 */
+/* exports provided: default */
+/* all exports used */
+/*!***************************************************************************************!*\
+  !*** ./~/vue-loader/lib/selector.js?type=script&index=0!./src/components/GPSInfo.vue ***!
+  \***************************************************************************************/
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    position: {
+      type: Object,
+      required: true
+    }
+  }
+});
+
+
+/***/ }),
+/* 34 */
+/* exports provided: default */
+/* all exports used */
+/*!******************************************************************************************!*\
+  !*** ./~/vue-loader/lib/selector.js?type=script&index=0!./src/components/GPSTracker.vue ***!
+  \******************************************************************************************/
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    watching: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      watchGPSOptions: {
+        maximumAge: 3600000,
+        timeout: 3000,
+        enableHighAccuracy: true,
+      },
+      watchID: NaN
+    }
+  },
+  methods: {
+    watchPosition() {
+      this.watchID = navigator.geolocation.watchPosition(onSuccess, onError, this.watchGPSOptions);
+      let elem = this
+
+      function onSuccess(position) {
+        elem.$emit('changedPosition', position)
+      }
+
+      function onError(error) {
+        alert('code: '    + error.code    + '\n' +'message: ' + error.message + '\n');
+      }
+    },
+    unwatchPosition() {
+      navigator.geolocation.clearWatch(this.watchID)
+    }
+  },
+  watch: {
+    watching() {
+      if (this.watching) {
+        this.watchPosition()
+      } else {
+        this.unwatchPosition()
+      }
+    }
+  }
+});
+
+
+/***/ }),
+/* 35 */
 /* exports provided: default */
 /* all exports used */
 /*!*****************************************************************************************!*\
@@ -30903,97 +31092,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 32 */
-/* exports provided: default */
-/* all exports used */
-/*!*****************************************************************************************!*\
-  !*** ./~/vue-loader/lib/selector.js?type=script&index=0!./src/components/TrackInfo.vue ***!
-  \*****************************************************************************************/
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data() {
-    return {
-      hey: 'naniero',
-      getGPSOptions: {
-        enableHighAccuracy: true,
-        maximumAge: 3600000
-      },
-      watchGPSOptions: {
-        maximumAge: 3600000,
-        timeout: 3000,
-        enableHighAccuracy: true,
-      },
-      positionGPS: {
-        coords: NaN
-      }
-    }
-  },
-  computed: {
-    position() {
-      console.log('this.positionGPS desde position es ', this.positionGPS)
-      return this.positionGPS
-    }
-  },
-  methods: {
-    getPosition() {
-      let watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError, this.getGPSOptions);
-      let elem = this
-
-      function onSuccess(position) {
-        elem.positionGPS = position
-      }
-
-      function onError(error) {
-        alert('code: '    + error.code    + '\n' +'message: ' + error.message + '\n');
-      }
-    },
-    watchPosition() {
-      var watchID = navigator.geolocation.watchPosition(onSuccess, onError, this.watchGPSOptions);
-      let elem = this
-
-      function onSuccess(position) {
-        elem.positionGPS = position
-      }
-
-      function onError(error) {
-        alert('code: '    + error.code    + '\n' +'message: ' + error.message + '\n');
-      }
-    }
-  }
-});
-
-
-/***/ }),
-/* 33 */
+/* 36 */
 /* unknown exports provided */
 /* all exports used */
 /*!****************************************************************************************************************************************!*\
@@ -31030,15 +31129,32 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "width": "50"
     }
-  }, [_c('f7-button', [_vm._v("Get GPS info")])], 1), _vm._v(" "), _c('f7-col', {
+  }, [_c('f7-button', {
+    on: {
+      "click": function($event) {
+        _vm.trackGPS = !_vm.trackGPS
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.gpsAction) + " GPS log")]), _vm._v(" "), _c('pr-gps-tracker', {
+    attrs: {
+      "watching": _vm.trackGPS
+    },
+    on: {
+      "changedPosition": _vm.changePosition
+    }
+  })], 1), _vm._v(" "), _c('f7-col', {
     attrs: {
       "width": "50"
     }
-  }, [_c('f7-button', [_vm._v("Get temperature")])], 1)], 1)], 1), _vm._v(" "), _c('f7-block-title', [_vm._v("Track status")]), _vm._v(" "), _c('f7-block', {
+  }, [_c('f7-button', [_vm._v("Start temp log")])], 1)], 1)], 1), _vm._v(" "), _c('f7-block-title', [_vm._v("Track status")]), _vm._v(" "), _c('f7-block', {
     attrs: {
       "inner": ""
     }
-  }, [_c('pr-track-info')], 1), _vm._v(" "), _c('f7-block-title', [_vm._v("Temperature status")]), _vm._v(" "), _c('f7-block', {
+  }, [_c('pr-gps-info', {
+    attrs: {
+      "position": _vm.position
+    }
+  })], 1), _vm._v(" "), _c('f7-block-title', [_vm._v("Temperature status")]), _vm._v(" "), _c('f7-block', {
     attrs: {
       "inner": ""
     }
@@ -31053,7 +31169,7 @@ if (false) {
 }
 
 /***/ }),
-/* 34 */
+/* 37 */
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************************************************************************************************************!*\
@@ -31117,7 +31233,27 @@ if (false) {
 }
 
 /***/ }),
-/* 35 */
+/* 38 */
+/* unknown exports provided */
+/* all exports used */
+/*!*******************************************************************************************************************************************************!*\
+  !*** ./~/vue-loader/lib/template-compiler?{"id":"data-v-5bd52e48"}!./~/vue-loader/lib/selector.js?type=template&index=0!./src/components/GPSInfo.vue ***!
+  \*******************************************************************************************************************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('f7-block', [_c('p', [_c('br'), _vm._v("Latitude: " + _vm._s(_vm.position.coords.latitude) + "\n    "), _c('br'), _vm._v("Longitude: " + _vm._s(_vm.position.coords.longitude) + "\n    "), _c('br'), _vm._v("Altitude: " + _vm._s(_vm.position.coords.altitude) + "\n    "), _c('br'), _vm._v("Accuracy: " + _vm._s(_vm.position.coords.accuracy) + "\n    "), _c('br'), _vm._v("Altitude Accuracy: " + _vm._s(_vm.position.coords.altitudeAccuracy) + "\n    "), _c('br'), _vm._v("Heading: " + _vm._s(_vm.position.coords.heading) + "\n    "), _c('br'), _vm._v("Speed: " + _vm._s(_vm.position.coords.speed) + "\n    "), _c('br'), _vm._v("Timestamp: " + _vm._s(_vm.position.timestamp) + "\n")])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5bd52e48", module.exports)
+  }
+}
+
+/***/ }),
+/* 39 */
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************************************************************************************************************!*\
@@ -31151,43 +31287,27 @@ if (false) {
 }
 
 /***/ }),
-/* 36 */
+/* 40 */
 /* unknown exports provided */
 /* all exports used */
-/*!*********************************************************************************************************************************************************!*\
-  !*** ./~/vue-loader/lib/template-compiler?{"id":"data-v-7a5073e9"}!./~/vue-loader/lib/selector.js?type=template&index=0!./src/components/TrackInfo.vue ***!
-  \*********************************************************************************************************************************************************/
+/*!**********************************************************************************************************************************************************!*\
+  !*** ./~/vue-loader/lib/template-compiler?{"id":"data-v-c47b8ee4"}!./~/vue-loader/lib/selector.js?type=template&index=0!./src/components/GPSTracker.vue ***!
+  \**********************************************************************************************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('f7-block', [_c('p', [_vm._v("Here the track status")]), _vm._v(" "), _c('f7-grid', [_c('f7-col', {
-    attrs: {
-      "width": "50"
-    }
-  }, [_c('f7-button', {
-    on: {
-      "click": _vm.getPosition
-    }
-  }, [_vm._v("Get GPS info")])], 1), _vm._v(" "), _c('f7-col', {
-    attrs: {
-      "width": "50"
-    }
-  }, [_c('f7-button', {
-    on: {
-      "click": _vm.watchPosition
-    }
-  }, [_vm._v("Watch GPS info")])], 1)], 1), _vm._v(" "), _c('p', [_c('br'), _vm._v("Latitude: " + _vm._s(_vm.position.coords.latitude) + "\n      "), _c('br'), _vm._v("Longitude: " + _vm._s(_vm.position.coords.longitude) + "\n      "), _c('br'), _vm._v("Altitude: " + _vm._s(_vm.position.coords.altitude) + "\n      "), _c('br'), _vm._v("Accuracy: " + _vm._s(_vm.position.coords.accuracy) + "\n      "), _c('br'), _vm._v("Altitude Accuracy: " + _vm._s(_vm.position.coords.altitudeAccuracy) + "\n      "), _c('br'), _vm._v("Heading: " + _vm._s(_vm.position.coords.heading) + "\n      "), _c('br'), _vm._v("Speed: " + _vm._s(_vm.position.coords.speed) + "\n      "), _c('br'), _vm._v("Timestamp: " + _vm._s(_vm.position.timestamp) + "\n  ")])], 1)
+  return _c("div")
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-7a5073e9", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-c47b8ee4", module.exports)
   }
 }
 
 /***/ }),
-/* 37 */
+/* 41 */
 /* unknown exports provided */
 /* all exports used */
 /*!**********************************************************************************************************************************************************!*\
@@ -31432,7 +31552,7 @@ if (false) {
 }
 
 /***/ }),
-/* 38 */
+/* 42 */
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************************************************************************************************************!*\
@@ -31476,7 +31596,7 @@ if (false) {
 }
 
 /***/ }),
-/* 39 */
+/* 43 */
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************************************************************************************************************************************************************************!*\
@@ -31507,28 +31627,59 @@ if(false) {
 }
 
 /***/ }),
-/* 40 */
+/* 44 */
 /* unknown exports provided */
 /* all exports used */
-/*!*******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./~/vue-style-loader!./~/css-loader!./~/vue-loader/lib/style-compiler?{"id":"data-v-7a5073e9","scoped":false,"hasInlineConfig":false}!./~/vue-loader/lib/selector.js?type=styles&index=0!./src/components/TrackInfo.vue ***!
-  \*******************************************************************************************************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./~/vue-style-loader!./~/css-loader!./~/vue-loader/lib/style-compiler?{"id":"data-v-5bd52e48","scoped":false,"hasInlineConfig":false}!./~/vue-loader/lib/selector.js?type=styles&index=0!./src/components/GPSInfo.vue ***!
+  \*****************************************************************************************************************************************************************************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(/*! !../../~/css-loader!../../~/vue-loader/lib/style-compiler?{"id":"data-v-7a5073e9","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector.js?type=styles&index=0!./TrackInfo.vue */ 14);
+var content = __webpack_require__(/*! !../../~/css-loader!../../~/vue-loader/lib/style-compiler?{"id":"data-v-5bd52e48","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector.js?type=styles&index=0!./GPSInfo.vue */ 14);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(/*! ../../~/vue-style-loader/lib/addStylesClient.js */ 2)("2c5babe3", content, false);
+var update = __webpack_require__(/*! ../../~/vue-style-loader/lib/addStylesClient.js */ 2)("27467078", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7a5073e9\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TrackInfo.vue", function() {
-     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7a5073e9\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TrackInfo.vue");
+   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-5bd52e48\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./GPSInfo.vue", function() {
+     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-5bd52e48\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./GPSInfo.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 45 */
+/* unknown exports provided */
+/* all exports used */
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./~/vue-style-loader!./~/css-loader!./~/vue-loader/lib/style-compiler?{"id":"data-v-c47b8ee4","scoped":false,"hasInlineConfig":false}!./~/vue-loader/lib/selector.js?type=styles&index=0!./src/components/GPSTracker.vue ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(/*! !../../~/css-loader!../../~/vue-loader/lib/style-compiler?{"id":"data-v-c47b8ee4","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector.js?type=styles&index=0!./GPSTracker.vue */ 15);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(/*! ../../~/vue-style-loader/lib/addStylesClient.js */ 2)("00f4e0a6", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-c47b8ee4\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./GPSTracker.vue", function() {
+     var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-c47b8ee4\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./GPSTracker.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

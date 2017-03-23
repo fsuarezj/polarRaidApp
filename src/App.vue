@@ -25,16 +25,17 @@
 							<p>When clicking you will get the info from the sensors</p>
 							<f7-grid>
 								<f7-col width="50">
-									<f7-button>Get GPS info</f7-button>
+									<f7-button @click="trackGPS = !trackGPS">{{ gpsAction }} GPS log</f7-button>
+									<pr-gps-tracker :watching="trackGPS" @changedPosition="changePosition"></pr-gps-tracker>
 								</f7-col>
 								<f7-col width="50">
-									<f7-button>Get temperature</f7-button>
+									<f7-button>Start temp log</f7-button>
 								</f7-col>
 							</f7-grid>
 						</f7-block>
 						<f7-block-title>Track status</f7-block-title>
 						<f7-block inner>
-							<pr-track-info></pr-track-info>
+							<pr-gps-info :position="position"></pr-gps-info>
 						</f7-block>
 						<f7-block-title>Temperature status</f7-block-title>
 						<f7-block inner>
@@ -50,12 +51,36 @@
 
 <script>
 	import LeftPanel from './components/LeftPanel.vue'
-	import TrackInfo from './components/TrackInfo.vue'
+	import GPSInfo from './components/GPSInfo.vue'
+	import GPSTracker from './components/GPSTracker.vue'
 
 	export default {
 		components: {
 			'pr-left-panel': LeftPanel,
-			'pr-track-info': TrackInfo
+			'pr-gps-info': GPSInfo,
+			'pr-gps-tracker': GPSTracker
+		},
+		data() {
+			return {
+				position: {
+					coords: NaN
+				},
+				trackGPS: false
+			}
+		},
+		computed: {
+			gpsAction() {
+				if (this.trackGPS) {
+					return "Stop"
+				} else {
+					return "Start"
+				}
+			}
+		},
+		methods: {
+			changePosition(position) {
+				this.position = position
+			}
 		}
 	}
 </script>
