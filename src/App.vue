@@ -41,6 +41,10 @@
 						<f7-block inner>
 							<p>Here the temperature status</p>
 						</f7-block>
+						<f7-block-title>File saving</f7-block-title>
+						<f7-block inner>
+							<pr-data-store></pr-data-store>
+						</f7-block>
 					</f7-page>
 				</f7-pages>
 			</f7-view>
@@ -53,12 +57,14 @@
 	import LeftPanel from './components/LeftPanel.vue'
 	import GPSInfo from './components/GPSInfo.vue'
 	import GPSTracker from './components/GPSTracker.vue'
+	import DataStore from './components/DataStore.vue'
 
 	export default {
 		components: {
 			'pr-left-panel': LeftPanel,
 			'pr-gps-info': GPSInfo,
-			'pr-gps-tracker': GPSTracker
+			'pr-gps-tracker': GPSTracker,
+			'pr-data-store': DataStore
 		},
 		data() {
 			return {
