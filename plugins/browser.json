@@ -21,6 +21,9 @@
         },
         "cordova-plugin-firebase": {
             "PACKAGE_NAME": "com.elPueblin.polarRaidTracking"
+        },
+        "cordova-plugin-ble-central": {
+            "PACKAGE_NAME": "com.elPueblin.polarRaidTracking"
         }
     },
     "dependent_plugins": {

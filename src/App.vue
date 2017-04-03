@@ -29,7 +29,8 @@
 									<pr-gps-tracker :watching="trackGPS" @changedPosition="changePosition"></pr-gps-tracker>
 								</f7-col>
 								<f7-col width="50">
-									<f7-button>Start temp log</f7-button>
+									<f7-button @click="trackTemp = !trackTemp">{{ tempAction }} temp log</f7-button>
+									<pr-temp-tracker :watching="trackTemp" @changedTemp="changeTemp"></pr-temp-tracker>
 								</f7-col>
 							</f7-grid>
 						</f7-block>
@@ -57,6 +58,7 @@
 	import LeftPanel from './components/LeftPanel.vue'
 	import GPSInfo from './components/GPSInfo.vue'
 	import GPSTracker from './components/GPSTracker.vue'
+	import TempTracker from './components/TempTracker.vue'
 	import DataStore from './components/DataStore.vue'
   import gjt from 'geojson-tools'
   import gju from 'geojson-utils'
@@ -66,6 +68,7 @@
 			'pr-left-panel': LeftPanel,
 			'pr-gps-info': GPSInfo,
 			'pr-gps-tracker': GPSTracker,
+			'pr-temp-tracker': TempTracker,
 			'pr-data-store': DataStore
 		},
 		data() {
@@ -74,6 +77,7 @@
 					coords: NaN
 				},
 				trackGPS: false,
+				trackTemp: false,
 				feature: {
 					geometry: {
 						coordinates: [0, 0]
@@ -88,13 +92,24 @@
 				} else {
 					return "Start"
 				}
+			},
+			tempAction() {
+				if (this.trackTemp) {
+					return "Stop"
+				} else {
+					return "Start"
+				}
 			}
 		},
 		methods: {
 			changePosition(position) {
 				console.log("Position is:", position)
 				this.position = position
-			}
+			},
+			changeTemp(temp) {
+				console.log("Temperature is:", temp)
+				this.temp = temp
+			},
 		},
 		watch: {
 			position() {
@@ -109,7 +124,7 @@
 						time: timestamp
 					}
 				}
-				if (gju.pointDistance(aux_feature.geometry, this.feature.geometry) > 10) {
+				if (gju.pointDistance(aux_feature.geometry, this.feature.geometry) > 20) {
 					this.feature = aux_feature
 					console.log("Saving new point")
 				// } else {

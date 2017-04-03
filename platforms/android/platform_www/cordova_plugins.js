@@ -37,6 +37,14 @@ module.exports = [
         "clobbers": [
             "FirebasePlugin"
         ]
+    },
+    {
+        "id": "cordova-plugin-ble-central.ble",
+        "file": "plugins/cordova-plugin-ble-central/www/ble.js",
+        "pluginId": "cordova-plugin-ble-central",
+        "clobbers": [
+            "ble"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -47,7 +55,8 @@ module.exports.metadata =
     "cordova-plugin-geolocation": "2.4.2",
     "cordova-plugin-bluetoothle": "4.3.1",
     "com.firebase.sdk": "3.0.4.2",
-    "cordova-plugin-firebase": "0.1.19"
+    "cordova-plugin-firebase": "0.1.19",
+    "cordova-plugin-ble-central": "1.1.4"
 };
 // BOTTOM OF METADATA
 });

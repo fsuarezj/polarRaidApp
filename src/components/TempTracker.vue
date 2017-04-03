@@ -15,23 +15,56 @@ export default {
       watchTempOptions: {
         "request": true,
         "statusReceiver": false,
-        "restoreKey" : "bluetoothleplugin"
+        "restoreKey" : "PolarRaidTracking"
       },
       watchID: NaN
     }
   },
   methods: {
     watchTemp() {
-      bluetoothle.initialize(onInitializeSuccess, onInitializeError, this.watchTempOptions)
-      let elem = this
-
-      function onInitializeSuccess(position) {
-        elem.$emit('changedPosition', position)
-      }
-
-      function onError(error) {
-        alert('code: '    + error.code    + '\n' +'message: ' + error.message + '\n');
-      }
+      ble.scan([], 5,
+        function(device) {
+          console.log(JSON.stringify(device));
+          console.log("Id:", device.id)
+          if (device.name = "WGX_iBeacon") {
+            let devId = device.id
+            ble.connect(devId,
+              function(result) {
+                console.log("Success connecting:", result)
+                for (let charac of result.characteristics) {
+                  if (charac.properties.indexOf("Read") >= 0) {
+                    console.log("Can read", charac)
+                    let servId = charac.service
+                    let characId = charac.characteristic
+                    ble.read(devId, servId, characId,
+                      function(result) {
+                        console.log("Resultado de", characId, "es", result)
+                      },
+                      function(error) {
+                        console.log("Error leyendo de", characId, "es", error)
+                      }
+                    )
+                  }
+                }
+              },
+              function(error) {
+                console.log("Error connecting:", error)
+              }
+            )
+          }
+        }, function(error) {
+          console.log("Error:", error)
+        }
+      )
+      let deviceId = "EC:74:2E:A6:FA:57"
+      ble.connect(deviceId,
+        function(result) {
+          console.log("Success:", result)
+        },
+        function(error) {
+          console.log("Error:", error)
+        }
+      )
     },
     unwatchPosition() {
       navigator.geolocation.clearWatch(this.watchID)
