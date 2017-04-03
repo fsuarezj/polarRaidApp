@@ -15,6 +15,12 @@
         },
         "cordova-plugin-bluetoothle": {
             "PACKAGE_NAME": "com.elPueblin.polarRaidTracking"
+        },
+        "com.firebase.sdk": {
+            "PACKAGE_NAME": "com.elPueblin.polarRaidTracking"
+        },
+        "cordova-plugin-firebase": {
+            "PACKAGE_NAME": "com.elPueblin.polarRaidTracking"
         }
     },
     "dependent_plugins": {

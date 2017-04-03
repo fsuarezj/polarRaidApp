@@ -1,13 +1,3 @@
-import Firebase from 'firebase'
-
-let configTest = {
-  apiKey: "AIzaSyBrnMRULFyfa0H7mDcQ3Yb22QyJtBEHSd0",
-  authDomain: "my-vue2-firebase.firebaseapp.com",
-  databaseURL: "https://my-vue2-firebase.firebaseio.com",
-  storageBucket: "my-vue2-firebase.appspot.com",
-  messagingSenderId: "282000909832"
-};
-
 let configPolarRaidBeta = {
   apiKey: "AIzaSyAFs_c-JhZrYY8RoJtqKcxSIfaZQvJ8VVw",
   authDomain: "polarraid-83d2f.firebaseapp.com",
@@ -17,10 +7,9 @@ let configPolarRaidBeta = {
   messagingSenderId: "609239958081"
 };
 
-let appAux = Firebase.initializeApp(configTest);
-let appPolarRaidBeta = Firebase.initializeApp(configPolarRaidBeta, "PolarRaidBeta");
+let appPolarRaidBeta = window.FirebasePlugin.initializeApp(configPolarRaidBeta, "PolarRaidBeta");
 
-export const getFirebaseRef = function(ref, app = appAux) {
+export const getFirebaseRef = function(ref, app = appPolarRaidBeta) {
   let firebaseDB = app.database();
   return firebaseDB.ref(ref);
 }

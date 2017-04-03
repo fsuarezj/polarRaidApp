@@ -10,6 +10,10 @@
     <feature name="BluetoothLePlugin">
         <param name="android-package" value="com.randdusing.bluetoothle.BluetoothLePlugin" />
     </feature>
+    <feature name="FirebasePlugin">
+        <param name="android-package" value="org.apache.cordova.firebase.FirebasePlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <hook src="hooks/hookers.js" type="before_prepare" />
     <hook src="hooks/beforedep.js" type="before_deploy" />
     <name>polarRaidTracking</name>

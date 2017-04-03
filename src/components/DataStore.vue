@@ -3,7 +3,7 @@
     <p>Here the data store messages</p>
     <button type="button" name="button" @click="createData">Create indexedDB</button>
     <button type="button" name="button" @click="readAllData">Save indexedDB</button>
-    <!-- <button type="button" name="button" @click="saveRemoteData">Save Firebase</button> -->
+    <button type="button" name="button" @click="updateRemoteData">Save Firebase</button>
   </div>
 </template>
 
@@ -16,7 +16,28 @@ export default {
       db: NaN,
       databaseName: 'pointsGPS',
       databaseVersion: 2,
-      openRequest: NaN
+      openRequest: NaN,
+      firebaseConfig: {
+        apiKey: "AIzaSyAFs_c-JhZrYY8RoJtqKcxSIfaZQvJ8VVw",
+        authDomain: "polarraid-83d2f.firebaseapp.com",
+        databaseURL: "https://polarraid-83d2f.firebaseio.com",
+        projectId: "polarraid-83d2f",
+        storageBucket: "polarraid-83d2f.appspot.com",
+        messagingSenderId: "609239958081"
+      },
+      firebaseApp: NaN
+    }
+  },
+  computed: {
+    firebaseDB() {
+      if (!this.firebaseApp) {
+        this.firebaseApp = window.firebase.initializeApp(this.firebaseConfig)
+        window.firebase.auth().signInWithEmailAndPassword('soyburwa@gmail.com','BurwaPerrete17')
+        .catch(function(error) {
+          console.log("Authetication error:", error.message, error.code)
+        })
+      }
+      return this.firebaseApp.database()
     }
   },
   methods: {
@@ -58,6 +79,7 @@ export default {
       let featuresStore = transaction.objectStore('features')
       let sentFeaturesStore = transaction.objectStore('sentFeatures')
       let request = featuresStore.getAllKeys()
+      let elem = this
       request.onerror = function(evt) {
         console.error('Error getting data.', evt.target.error)
       }
@@ -70,26 +92,72 @@ export default {
           }
           request2.onsuccess = function(e) {
             let aux_feat = e.target.result
-            let request3 = sentFeaturesStore.add(aux_feat, k)
-            request3.onerror = function(e1) {
-              console.error('Error when adding data to sent Features.', e.target.error)
-            }
-            request3.onsuccess = function(e1) {
-              let request4 = featuresStore.delete(k)
-              request4.onerror = function(e2) {
-                console.error('Error when deleting data from Features.', e.target.error)
+            elem.firebaseDB.ref('/pointsTrack/features/' + k).set(aux_feat)
+            .then(function(snapshot) {
+              let request3 = sentFeaturesStore.add(aux_feat, k)
+              request3.onerror = function(e1) {
+                console.error('Error when adding data to sent Features.', e.target.error)
               }
-              request4.onsuccess = function(e2) {
-                console.log("Data deleted from features")
+              request3.onsuccess = function(e1) {
+                let request4 = featuresStore.delete(k)
+                request4.onerror = function(e2) {
+                  console.error('Error when deleting data from Features.', e.target.error)
+                }
+                request4.onsuccess = function(e2) {
+                  console.log("Data deleted from features")
+                }
               }
-            }
+            })
+            // .catch(function(error) {
+            //   console.error('Error saving to firebase.', error.name + ":", error.message)
+            // })
           }
         }
       }
     },
-    // saveRemoteData() {
-    //   getFirebaseRef('testFeatures').set(this.feature)
-    // }
+    saveRemoteData() {
+      let feature = {
+        "type": "Feature",
+        "properties": {
+            "name": "Rovaniemi",
+            "time": "2017-02-23T02:52:11Z",
+            "temp": 1
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                25.713897943496704,
+                65.50043818576843
+            ]
+        }
+      }
+      this.firebaseDB.ref('/pointsTrack/features').set([feature])
+      .then(function(snapshot) {
+        console.log('Salvado!!!')
+      })
+    },
+    updateRemoteData() {
+      let feature = {
+        "type": "Feature",
+        "properties": {
+            "name": "Rovaniemi",
+            "time": "2017-02-23T02:52:11Z",
+            "temp": 1
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                25.713897943496704,
+                65.50043818576843
+            ]
+        }
+      }
+      let newFeatureKey = this.firebaseDB.ref('/pointsTrack/features').push().key
+      this.firebaseDB.ref('/pointsTrack/features').push(feature)
+      .then(function(snapshot) {
+        console.log("Yujuuuu")
+      })
+    }
   },
   mounted() {
     this.openRequest = window.indexedDB.open(this.databaseName, this.databaseVersion)

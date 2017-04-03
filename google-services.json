@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "609239958081",
+    "firebase_url": "https://polarraid-83d2f.firebaseio.com",
+    "project_id": "polarraid-83d2f",
+    "storage_bucket": "polarraid-83d2f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609239958081:android:0e2fd443ee1c1871",
+        "android_client_info": {
+          "package_name": "com.elPueblin.polarRaidTracking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609239958081-2vmeuggnm8rgr5jd7m36ht8qihgm7mql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkEv9juXyPWhzUdjT1ifHnoBtMt46Jwrk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -21,6 +21,22 @@ module.exports = [
         "clobbers": [
             "window.bluetoothle"
         ]
+    },
+    {
+        "id": "com.firebase.sdk.firebase",
+        "file": "plugins/com.firebase.sdk/www/firebase/firebase.js",
+        "pluginId": "com.firebase.sdk",
+        "clobbers": [
+            "firebase"
+        ]
+    },
+    {
+        "id": "cordova-plugin-firebase.FirebasePlugin",
+        "file": "plugins/cordova-plugin-firebase/www/firebase.js",
+        "pluginId": "cordova-plugin-firebase",
+        "clobbers": [
+            "FirebasePlugin"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -29,7 +45,9 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.2",
     "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-geolocation": "2.4.2",
-    "cordova-plugin-bluetoothle": "4.3.1"
+    "cordova-plugin-bluetoothle": "4.3.1",
+    "com.firebase.sdk": "3.0.4.2",
+    "cordova-plugin-firebase": "0.1.19"
 };
 // BOTTOM OF METADATA
 });
