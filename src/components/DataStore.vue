@@ -2,8 +2,7 @@
   <div class="">
     <p>Here the data store messages</p>
     <button type="button" name="button" @click="createData">Create indexedDB</button>
-    <button type="button" name="button" @click="readAllData">Save indexedDB</button>
-    <button type="button" name="button" @click="updateRemoteData">Save Firebase</button>
+    <button type="button" name="button" @click="saveData2Firebase">Save indexedDB</button>
   </div>
 </template>
 
@@ -11,6 +10,11 @@
 // import { getFirebaseRef } from './mixins/FirebaseDB'
 
 export default {
+  props: {
+    feature: {
+      type: Object
+    }
+  },
   data() {
     return {
       db: NaN,
@@ -40,44 +44,38 @@ export default {
       return this.firebaseApp.database()
     }
   },
+  watch: {
+    feature() {
+      if(this.feature) {
+        this.createData()
+      }
+    }
+  },
   methods: {
     errorFunc(evt) {
       console.log('Error when connecting with the indexedDB. Code: ' + this.openRequest)
       alert('Error when connecting with the indexedDB. Code: ' + evt.target.error.code, evt.target.error.name)
     },
-    storeData(evt) {
+    dbConnection(evt) {
       this.db = this.openRequest.result
       console.log("Connected with the indexedDB")
     },
     createData() {
+      // let feature = { hey: 'hou'}
       let featuresStore = this.db.transaction(['features'], 'readwrite').objectStore('features')
-      let feature = {
-        "type": "Feature",
-        "properties": {
-            "name": "Rovaniemi",
-            "time": "2017-02-23T02:52:11Z",
-            "temp": 1
-        },
-        "geometry": {
-            "type": "Point",
-            "coordinates": [
-                25.713897943496704,
-                65.50043818576843
-            ]
-        }
-      }
-      let request = featuresStore.add(feature)
+      let request = featuresStore.add(this.feature)
+      let elem = this
       request.onerror = function(e) {
         console.error('Error when creating data.', e.target.error)
       }
       request.onsuccess = function(e) {
-        console.log("Data written")
+        console.log("Data written to indexedDB")
+        elem.saveData2Firebase()
       }
     },
-    readAllData() {
-      let transaction = this.db.transaction(['features', 'sentFeatures'], 'readwrite')
+    saveData2Firebase() {
+      let transaction = this.db.transaction(['features'], 'readonly')
       let featuresStore = transaction.objectStore('features')
-      let sentFeaturesStore = transaction.objectStore('sentFeatures')
       let request = featuresStore.getAllKeys()
       let elem = this
       request.onerror = function(evt) {
@@ -86,72 +84,49 @@ export default {
       request.onsuccess = function(evt) {
         let keys = evt.target.result
         for (let k of keys) {
-          let request2 = featuresStore.get(k)
-          request2.onerror = function(e) {
+          let request = featuresStore.get(k)
+          request.onerror = function(e) {
             console.error('Error getting data for key = '+k+'.', e.target.error)
           }
-          request2.onsuccess = function(e) {
+          request.onsuccess = function(e) {
             let aux_feat = e.target.result
             elem.firebaseDB.ref('/pointsTrack/features/' + k).set(aux_feat)
-            .then(function(snapshot) {
-              let request3 = sentFeaturesStore.add(aux_feat, k)
-              request3.onerror = function(e1) {
-                console.error('Error when adding data to sent Features.', e.target.error)
+            // elem.firebaseDB.ref('/pointsTrack/features/' + k).set(aux_feat)
+            .then(function() {
+              console.log("Hecho")
+              let transactionRw = elem.db.transaction(['features', 'sentFeatures'], 'readwrite')
+              let featuresStoreRw = transactionRw.objectStore('features')
+              let sentFeaturesStore = transactionRw.objectStore('sentFeatures')
+              let request = sentFeaturesStore.add(aux_feat, k)
+              request.onerror = function(e1) {
+                console.error('error when adding data to sent features.', e1.target.error)
               }
-              request3.onsuccess = function(e1) {
-                let request4 = featuresStore.delete(k)
-                request4.onerror = function(e2) {
-                  console.error('Error when deleting data from Features.', e.target.error)
+              request.onsuccess = function(e1) {
+                let request = featuresStoreRw.delete(k)
+                request.onerror = function(e2) {
+                  console.error('error when deleting data from features.', e2.target.error)
                 }
-                request4.onsuccess = function(e2) {
-                  console.log("Data deleted from features")
+                request.onsuccess = function(e2) {
+                  console.log("data deleted from features")
                 }
               }
             })
-            // .catch(function(error) {
-            //   console.error('Error saving to firebase.', error.name + ":", error.message)
-            // })
+            .catch(function(error) {
+              console.error('Error when saving to firebase.', error.name + ":", error.message)
+            })
           }
         }
       }
     },
-    saveRemoteData() {
-      let feature = {
-        "type": "Feature",
-        "properties": {
-            "name": "Rovaniemi",
-            "time": "2017-02-23T02:52:11Z",
-            "temp": 1
-        },
-        "geometry": {
-            "type": "Point",
-            "coordinates": [
-                25.713897943496704,
-                65.50043818576843
-            ]
-        }
-      }
+    // Not used
+    saveRemoteData(feature) {
       this.firebaseDB.ref('/pointsTrack/features').set([feature])
       .then(function(snapshot) {
         console.log('Salvado!!!')
       })
     },
-    updateRemoteData() {
-      let feature = {
-        "type": "Feature",
-        "properties": {
-            "name": "Rovaniemi",
-            "time": "2017-02-23T02:52:11Z",
-            "temp": 1
-        },
-        "geometry": {
-            "type": "Point",
-            "coordinates": [
-                25.713897943496704,
-                65.50043818576843
-            ]
-        }
-      }
+    // Not used
+    updateRemoteData(feature) {
       let newFeatureKey = this.firebaseDB.ref('/pointsTrack/features').push().key
       this.firebaseDB.ref('/pointsTrack/features').push(feature)
       .then(function(snapshot) {
@@ -162,7 +137,7 @@ export default {
   mounted() {
     this.openRequest = window.indexedDB.open(this.databaseName, this.databaseVersion)
     this.openRequest.onerror = this.errorFunc
-    this.openRequest.onsuccess = this.storeData
+    this.openRequest.onsuccess = this.dbConnection
     this.openRequest.onupgradeneeded = function(event) {
       let aux_db = event.target.result
       aux_db.onerror = function() {
@@ -178,12 +153,6 @@ export default {
         let store = aux_db.createObjectStore('sentFeatures')
         console.log("Added sent features object store")
       }
-      // store.transaction.oncomplete = function(event) {
-      //   let featuresStore = db.transaction(['features'], 'readwrite').objectStore('features')
-      //   features.forEach(function(feature) {
-      //     featureStore.add(feature)
-      //   })
-      // }
     }
   }
 }

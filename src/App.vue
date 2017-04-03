@@ -43,7 +43,7 @@
 						</f7-block>
 						<f7-block-title>File saving</f7-block-title>
 						<f7-block inner>
-							<pr-data-store></pr-data-store>
+							<pr-data-store :feature="feature"></pr-data-store>
 						</f7-block>
 					</f7-page>
 				</f7-pages>
@@ -58,6 +58,7 @@
 	import GPSInfo from './components/GPSInfo.vue'
 	import GPSTracker from './components/GPSTracker.vue'
 	import DataStore from './components/DataStore.vue'
+  import gjt from 'geojson-tools'
 
 	export default {
 		components: {
@@ -71,7 +72,8 @@
 				position: {
 					coords: NaN
 				},
-				trackGPS: false
+				trackGPS: false,
+				feature: {}
 			}
 		},
 		computed: {
@@ -85,7 +87,16 @@
 		},
 		methods: {
 			changePosition(position) {
-				this.position = position
+				console.log("Position is:", position)
+				this.position = Object(position)
+			}
+		},
+		watch: {
+			position() {
+				let lat = this.position.coords.latitude
+				let lon = this.position.coords.longitude
+        this.feature = gjt.toGeoJSON([lat, lon], 'Point')
+				console.log("Feature es", this.feature)
 			}
 		}
 	}
