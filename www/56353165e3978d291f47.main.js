@@ -32999,14 +32999,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		methods: {
 			changePosition(position) {
 				console.log("Position is:", position)
-				this.position = Object(position)
+				this.position = position
 			}
 		},
 		watch: {
 			position() {
 				let lat = this.position.coords.latitude
 				let lon = this.position.coords.longitude
-        this.feature = __WEBPACK_IMPORTED_MODULE_4_geojson_tools___default.a.toGeoJSON([lat, lon], 'Point')
+				let timestamp = this.position.timestamp
+				console.log("Timestamp es", timestamp)
+				let geometry_val = __WEBPACK_IMPORTED_MODULE_4_geojson_tools___default.a.toGeoJSON([lat, lon], 'Point')
+        let aux_feature = {
+					type: 'Feature',
+					geometry: geometry_val,
+					properties: {
+						time: timestamp
+					}
+				}
+				this.feature = aux_feature
 				console.log("Feature es", this.feature)
 			}
 		}

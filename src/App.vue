@@ -88,14 +88,24 @@
 		methods: {
 			changePosition(position) {
 				console.log("Position is:", position)
-				this.position = Object(position)
+				this.position = position
 			}
 		},
 		watch: {
 			position() {
 				let lat = this.position.coords.latitude
 				let lon = this.position.coords.longitude
-        this.feature = gjt.toGeoJSON([lat, lon], 'Point')
+				let timestamp = this.position.timestamp
+				console.log("Timestamp es", timestamp)
+				let geometry_val = gjt.toGeoJSON([lat, lon], 'Point')
+        let aux_feature = {
+					type: 'Feature',
+					geometry: geometry_val,
+					properties: {
+						time: timestamp
+					}
+				}
+				this.feature = aux_feature
 				console.log("Feature es", this.feature)
 			}
 		}
