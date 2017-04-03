@@ -1,8 +1,6 @@
 <template lang="html">
   <div class="">
-    <p>Here the data store messages</p>
-    <button type="button" name="button" @click="createData">Create indexedDB</button>
-    <button type="button" name="button" @click="saveData2Firebase">Save indexedDB</button>
+    <p v-for="point in savedPoints">Saved point at {{ point[0] }}, {{ point[1] }}</p>
   </div>
 </template>
 
@@ -29,7 +27,8 @@ export default {
         storageBucket: "polarraid-83d2f.appspot.com",
         messagingSenderId: "609239958081"
       },
-      firebaseApp: NaN
+      firebaseApp: NaN,
+      savedPoints: []
     }
   },
   computed: {
@@ -102,6 +101,8 @@ export default {
                 console.error('error when adding data to sent features.', e1.target.error)
               }
               request.onsuccess = function(e1) {
+                console.log("Va a meter", aux_feat.geometry.coordinates, "en", elem.savedPoints)
+                elem.savedPoints.push(aux_feat.geometry.coordinates)
                 let request = featuresStoreRw.delete(k)
                 request.onerror = function(e2) {
                   console.error('error when deleting data from features.', e2.target.error)

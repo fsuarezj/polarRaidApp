@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 26);
+/******/ 	return __webpack_require__(__webpack_require__.s = 27);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -240,7 +240,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(/*! ./listToStyles */ 25)
+var listToStyles = __webpack_require__(/*! ./listToStyles */ 26)
 
 /*
 type StyleObject = {
@@ -27822,15 +27822,15 @@ module.exports = Vue$3;
 /* harmony default export */ __webpack_exports__["a"] = ([
 	{
 		path: '/about/',
-		component: __webpack_require__(/*! ./assets/vue/pages/about.vue */ 27)
+		component: __webpack_require__(/*! ./assets/vue/pages/about.vue */ 28)
 	},
 	{
 		path: '/form/',
-		component: __webpack_require__(/*! ./assets/vue/pages/form.vue */ 29)
+		component: __webpack_require__(/*! ./assets/vue/pages/form.vue */ 30)
 	},
 	{
 		path: '/dynamic-route/blog/:blogId/post/:postId/',
-		component: __webpack_require__(/*! ./assets/vue/pages/dynamic-route.vue */ 28)
+		component: __webpack_require__(/*! ./assets/vue/pages/dynamic-route.vue */ 29)
 	}
 ]);
 
@@ -27848,7 +27848,7 @@ module.exports = Vue$3;
 var content = __webpack_require__(/*! !../../../../~/css-loader!../../../../~/sass-loader/lib/loader.js!./main.scss */ 12);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(/*! ../../../../~/style-loader/addStyles.js */ 23)(content, {});
+var update = __webpack_require__(/*! ../../../../~/style-loader/addStyles.js */ 24)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -27875,9 +27875,9 @@ if(false) {
 
 var Component = __webpack_require__(/*! ../~/vue-loader/lib/component-normalizer */ 0)(
   /* script */
-  __webpack_require__(/*! !!../~/vue-loader/lib/selector?type=script&index=0!./App.vue */ 34),
+  __webpack_require__(/*! !!../~/vue-loader/lib/selector?type=script&index=0!./App.vue */ 35),
   /* template */
-  __webpack_require__(/*! !../~/vue-loader/lib/template-compiler/index?{"id":"data-v-1c5b8368"}!../~/vue-loader/lib/selector?type=template&index=0!./App.vue */ 43),
+  __webpack_require__(/*! !../~/vue-loader/lib/template-compiler/index?{"id":"data-v-1c5b8368"}!../~/vue-loader/lib/selector?type=template&index=0!./App.vue */ 44),
   /* scopeId */
   null,
   /* cssModules */
@@ -28145,8 +28145,8 @@ function fromByteArray (uint8) {
 
 
 var base64 = __webpack_require__(/*! base64-js */ 17)
-var ieee754 = __webpack_require__(/*! ieee754 */ 21)
-var isArray = __webpack_require__(/*! isarray */ 22)
+var ieee754 = __webpack_require__(/*! ieee754 */ 22)
+var isArray = __webpack_require__(/*! isarray */ 23)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -29956,7 +29956,7 @@ module.exports = __webpack_require__(/*! ./src/geojson-tools */ 20);
 /*
  * Required dependencies
  */
-var _ = __webpack_require__(/*! underscore */ 24);
+var _ = __webpack_require__(/*! underscore */ 25);
 
 
 /**
@@ -30563,6 +30563,425 @@ exports.isGeoJSON = isGeoJSON;
 /***/ }),
 /* 21 */
 /* unknown exports provided */
+/* exports used: default */
+/*!******************************************!*\
+  !*** ./~/geojson-utils/geojson-utils.js ***!
+  \******************************************/
+/***/ (function(module, exports) {
+
+(function () {
+  var gju = this.gju = {};
+
+  // Export the geojson object for **CommonJS**
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = gju;
+  }
+
+  // adapted from http://www.kevlindev.com/gui/math/intersection/Intersection.js
+  gju.lineStringsIntersect = function (l1, l2) {
+    var intersects = [];
+    for (var i = 0; i <= l1.coordinates.length - 2; ++i) {
+      for (var j = 0; j <= l2.coordinates.length - 2; ++j) {
+        var a1 = {
+          x: l1.coordinates[i][1],
+          y: l1.coordinates[i][0]
+        },
+          a2 = {
+            x: l1.coordinates[i + 1][1],
+            y: l1.coordinates[i + 1][0]
+          },
+          b1 = {
+            x: l2.coordinates[j][1],
+            y: l2.coordinates[j][0]
+          },
+          b2 = {
+            x: l2.coordinates[j + 1][1],
+            y: l2.coordinates[j + 1][0]
+          },
+          ua_t = (b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x),
+          ub_t = (a2.x - a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x),
+          u_b = (b2.y - b1.y) * (a2.x - a1.x) - (b2.x - b1.x) * (a2.y - a1.y);
+        if (u_b != 0) {
+          var ua = ua_t / u_b,
+            ub = ub_t / u_b;
+          if (0 <= ua && ua <= 1 && 0 <= ub && ub <= 1) {
+            intersects.push({
+              'type': 'Point',
+              'coordinates': [a1.x + ua * (a2.x - a1.x), a1.y + ua * (a2.y - a1.y)]
+            });
+          }
+        }
+      }
+    }
+    if (intersects.length == 0) intersects = false;
+    return intersects;
+  }
+
+  // Bounding Box
+
+  function boundingBoxAroundPolyCoords (coords) {
+    var xAll = [], yAll = []
+
+    for (var i = 0; i < coords[0].length; i++) {
+      xAll.push(coords[0][i][1])
+      yAll.push(coords[0][i][0])
+    }
+
+    xAll = xAll.sort(function (a,b) { return a - b })
+    yAll = yAll.sort(function (a,b) { return a - b })
+
+    return [ [xAll[0], yAll[0]], [xAll[xAll.length - 1], yAll[yAll.length - 1]] ]
+  }
+
+  gju.pointInBoundingBox = function (point, bounds) {
+    return !(point.coordinates[1] < bounds[0][0] || point.coordinates[1] > bounds[1][0] || point.coordinates[0] < bounds[0][1] || point.coordinates[0] > bounds[1][1]) 
+  }
+
+  // Point in Polygon
+  // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html#Listing the Vertices
+
+  function pnpoly (x,y,coords) {
+    var vert = [ [0,0] ]
+
+    for (var i = 0; i < coords.length; i++) {
+      for (var j = 0; j < coords[i].length; j++) {
+        vert.push(coords[i][j])
+      }
+	  vert.push(coords[i][0])
+      vert.push([0,0])
+    }
+
+    var inside = false
+    for (var i = 0, j = vert.length - 1; i < vert.length; j = i++) {
+      if (((vert[i][0] > y) != (vert[j][0] > y)) && (x < (vert[j][1] - vert[i][1]) * (y - vert[i][0]) / (vert[j][0] - vert[i][0]) + vert[i][1])) inside = !inside
+    }
+
+    return inside
+  }
+
+  gju.pointInPolygon = function (p, poly) {
+    var coords = (poly.type == "Polygon") ? [ poly.coordinates ] : poly.coordinates
+
+    var insideBox = false
+    for (var i = 0; i < coords.length; i++) {
+      if (gju.pointInBoundingBox(p, boundingBoxAroundPolyCoords(coords[i]))) insideBox = true
+    }
+    if (!insideBox) return false
+
+    var insidePoly = false
+    for (var i = 0; i < coords.length; i++) {
+      if (pnpoly(p.coordinates[1], p.coordinates[0], coords[i])) insidePoly = true
+    }
+
+    return insidePoly
+  }
+
+  // support multi (but not donut) polygons
+  gju.pointInMultiPolygon = function (p, poly) {
+    var coords_array = (poly.type == "MultiPolygon") ? [ poly.coordinates ] : poly.coordinates
+
+    var insideBox = false
+    var insidePoly = false
+    for (var i = 0; i < coords_array.length; i++){
+      var coords = coords_array[i];
+      for (var j = 0; j < coords.length; j++) {
+        if (!insideBox){
+          if (gju.pointInBoundingBox(p, boundingBoxAroundPolyCoords(coords[j]))) {
+            insideBox = true
+          }
+        }
+      }
+      if (!insideBox) return false
+      for (var j = 0; j < coords.length; j++) {
+        if (!insidePoly){
+          if (pnpoly(p.coordinates[1], p.coordinates[0], coords[j])) {
+            insidePoly = true
+          }
+        }
+      }
+    }
+
+    return insidePoly
+  }
+
+  gju.numberToRadius = function (number) {
+    return number * Math.PI / 180;
+  }
+
+  gju.numberToDegree = function (number) {
+    return number * 180 / Math.PI;
+  }
+
+  // written with help from @tautologe
+  gju.drawCircle = function (radiusInMeters, centerPoint, steps) {
+    var center = [centerPoint.coordinates[1], centerPoint.coordinates[0]],
+      dist = (radiusInMeters / 1000) / 6371,
+      // convert meters to radiant
+      radCenter = [gju.numberToRadius(center[0]), gju.numberToRadius(center[1])],
+      steps = steps || 15,
+      // 15 sided circle
+      poly = [[center[0], center[1]]];
+    for (var i = 0; i < steps; i++) {
+      var brng = 2 * Math.PI * i / steps;
+      var lat = Math.asin(Math.sin(radCenter[0]) * Math.cos(dist)
+              + Math.cos(radCenter[0]) * Math.sin(dist) * Math.cos(brng));
+      var lng = radCenter[1] + Math.atan2(Math.sin(brng) * Math.sin(dist) * Math.cos(radCenter[0]),
+                                          Math.cos(dist) - Math.sin(radCenter[0]) * Math.sin(lat));
+      poly[i] = [];
+      poly[i][1] = gju.numberToDegree(lat);
+      poly[i][0] = gju.numberToDegree(lng);
+    }
+    return {
+      "type": "Polygon",
+      "coordinates": [poly]
+    };
+  }
+
+  // assumes rectangle starts at lower left point
+  gju.rectangleCentroid = function (rectangle) {
+    var bbox = rectangle.coordinates[0];
+    var xmin = bbox[0][0],
+      ymin = bbox[0][1],
+      xmax = bbox[2][0],
+      ymax = bbox[2][1];
+    var xwidth = xmax - xmin;
+    var ywidth = ymax - ymin;
+    return {
+      'type': 'Point',
+      'coordinates': [xmin + xwidth / 2, ymin + ywidth / 2]
+    };
+  }
+
+  // from http://www.movable-type.co.uk/scripts/latlong.html
+  gju.pointDistance = function (pt1, pt2) {
+    var lon1 = pt1.coordinates[0],
+      lat1 = pt1.coordinates[1],
+      lon2 = pt2.coordinates[0],
+      lat2 = pt2.coordinates[1],
+      dLat = gju.numberToRadius(lat2 - lat1),
+      dLon = gju.numberToRadius(lon2 - lon1),
+      a = Math.pow(Math.sin(dLat / 2), 2) + Math.cos(gju.numberToRadius(lat1))
+        * Math.cos(gju.numberToRadius(lat2)) * Math.pow(Math.sin(dLon / 2), 2),
+      c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return (6371 * c) * 1000; // returns meters
+  },
+
+  // checks if geometry lies entirely within a circle
+  // works with Point, LineString, Polygon
+  gju.geometryWithinRadius = function (geometry, center, radius) {
+    if (geometry.type == 'Point') {
+      return gju.pointDistance(geometry, center) <= radius;
+    } else if (geometry.type == 'LineString' || geometry.type == 'Polygon') {
+      var point = {};
+      var coordinates;
+      if (geometry.type == 'Polygon') {
+        // it's enough to check the exterior ring of the Polygon
+        coordinates = geometry.coordinates[0];
+      } else {
+        coordinates = geometry.coordinates;
+      }
+      for (var i in coordinates) {
+        point.coordinates = coordinates[i];
+        if (gju.pointDistance(point, center) > radius) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  // adapted from http://paulbourke.net/geometry/polyarea/javascript.txt
+  gju.area = function (polygon) {
+    var area = 0;
+    // TODO: polygon holes at coordinates[1]
+    var points = polygon.coordinates[0];
+    var j = points.length - 1;
+    var p1, p2;
+
+    for (var i = 0; i < points.length; j = i++) {
+      var p1 = {
+        x: points[i][1],
+        y: points[i][0]
+      };
+      var p2 = {
+        x: points[j][1],
+        y: points[j][0]
+      };
+      area += p1.x * p2.y;
+      area -= p1.y * p2.x;
+    }
+
+    area /= 2;
+    return area;
+  },
+
+  // adapted from http://paulbourke.net/geometry/polyarea/javascript.txt
+  gju.centroid = function (polygon) {
+    var f, x = 0,
+      y = 0;
+    // TODO: polygon holes at coordinates[1]
+    var points = polygon.coordinates[0];
+    var j = points.length - 1;
+    var p1, p2;
+
+    for (var i = 0; i < points.length; j = i++) {
+      var p1 = {
+        x: points[i][1],
+        y: points[i][0]
+      };
+      var p2 = {
+        x: points[j][1],
+        y: points[j][0]
+      };
+      f = p1.x * p2.y - p2.x * p1.y;
+      x += (p1.x + p2.x) * f;
+      y += (p1.y + p2.y) * f;
+    }
+
+    f = gju.area(polygon) * 6;
+    return {
+      'type': 'Point',
+      'coordinates': [y / f, x / f]
+    };
+  },
+
+  gju.simplify = function (source, kink) { /* source[] array of geojson points */
+    /* kink	in metres, kinks above this depth kept  */
+    /* kink depth is the height of the triangle abc where a-b and b-c are two consecutive line segments */
+    kink = kink || 20;
+    source = source.map(function (o) {
+      return {
+        lng: o.coordinates[0],
+        lat: o.coordinates[1]
+      }
+    });
+
+    var n_source, n_stack, n_dest, start, end, i, sig;
+    var dev_sqr, max_dev_sqr, band_sqr;
+    var x12, y12, d12, x13, y13, d13, x23, y23, d23;
+    var F = (Math.PI / 180.0) * 0.5;
+    var index = new Array(); /* aray of indexes of source points to include in the reduced line */
+    var sig_start = new Array(); /* indices of start & end of working section */
+    var sig_end = new Array();
+
+    /* check for simple cases */
+
+    if (source.length < 3) return (source); /* one or two points */
+
+    /* more complex case. initialize stack */
+
+    n_source = source.length;
+    band_sqr = kink * 360.0 / (2.0 * Math.PI * 6378137.0); /* Now in degrees */
+    band_sqr *= band_sqr;
+    n_dest = 0;
+    sig_start[0] = 0;
+    sig_end[0] = n_source - 1;
+    n_stack = 1;
+
+    /* while the stack is not empty  ... */
+    while (n_stack > 0) {
+
+      /* ... pop the top-most entries off the stacks */
+
+      start = sig_start[n_stack - 1];
+      end = sig_end[n_stack - 1];
+      n_stack--;
+
+      if ((end - start) > 1) { /* any intermediate points ? */
+
+        /* ... yes, so find most deviant intermediate point to
+        either side of line joining start & end points */
+
+        x12 = (source[end].lng() - source[start].lng());
+        y12 = (source[end].lat() - source[start].lat());
+        if (Math.abs(x12) > 180.0) x12 = 360.0 - Math.abs(x12);
+        x12 *= Math.cos(F * (source[end].lat() + source[start].lat())); /* use avg lat to reduce lng */
+        d12 = (x12 * x12) + (y12 * y12);
+
+        for (i = start + 1, sig = start, max_dev_sqr = -1.0; i < end; i++) {
+
+          x13 = source[i].lng() - source[start].lng();
+          y13 = source[i].lat() - source[start].lat();
+          if (Math.abs(x13) > 180.0) x13 = 360.0 - Math.abs(x13);
+          x13 *= Math.cos(F * (source[i].lat() + source[start].lat()));
+          d13 = (x13 * x13) + (y13 * y13);
+
+          x23 = source[i].lng() - source[end].lng();
+          y23 = source[i].lat() - source[end].lat();
+          if (Math.abs(x23) > 180.0) x23 = 360.0 - Math.abs(x23);
+          x23 *= Math.cos(F * (source[i].lat() + source[end].lat()));
+          d23 = (x23 * x23) + (y23 * y23);
+
+          if (d13 >= (d12 + d23)) dev_sqr = d23;
+          else if (d23 >= (d12 + d13)) dev_sqr = d13;
+          else dev_sqr = (x13 * y12 - y13 * x12) * (x13 * y12 - y13 * x12) / d12; // solve triangle
+          if (dev_sqr > max_dev_sqr) {
+            sig = i;
+            max_dev_sqr = dev_sqr;
+          }
+        }
+
+        if (max_dev_sqr < band_sqr) { /* is there a sig. intermediate point ? */
+          /* ... no, so transfer current start point */
+          index[n_dest] = start;
+          n_dest++;
+        } else { /* ... yes, so push two sub-sections on stack for further processing */
+          n_stack++;
+          sig_start[n_stack - 1] = sig;
+          sig_end[n_stack - 1] = end;
+          n_stack++;
+          sig_start[n_stack - 1] = start;
+          sig_end[n_stack - 1] = sig;
+        }
+      } else { /* ... no intermediate points, so transfer current start point */
+        index[n_dest] = start;
+        n_dest++;
+      }
+    }
+
+    /* transfer last point */
+    index[n_dest] = n_source - 1;
+    n_dest++;
+
+    /* make return array */
+    var r = new Array();
+    for (var i = 0; i < n_dest; i++)
+      r.push(source[index[i]]);
+
+    return r.map(function (o) {
+      return {
+        type: "Point",
+        coordinates: [o.lng, o.lat]
+      }
+    });
+  }
+
+  // http://www.movable-type.co.uk/scripts/latlong.html#destPoint
+  gju.destinationPoint = function (pt, brng, dist) {
+    dist = dist/6371;  // convert dist to angular distance in radians
+    brng = gju.numberToRadius(brng);
+
+    var lon1 = gju.numberToRadius(pt.coordinates[0]);
+    var lat1 = gju.numberToRadius(pt.coordinates[1]);
+
+    var lat2 = Math.asin( Math.sin(lat1)*Math.cos(dist) +
+                          Math.cos(lat1)*Math.sin(dist)*Math.cos(brng) );
+    var lon2 = lon1 + Math.atan2(Math.sin(brng)*Math.sin(dist)*Math.cos(lat1),
+                                 Math.cos(dist)-Math.sin(lat1)*Math.sin(lat2));
+    lon2 = (lon2+3*Math.PI) % (2*Math.PI) - Math.PI;  // normalise to -180..+180º
+
+    return {
+      'type': 'Point',
+      'coordinates': [gju.numberToDegree(lon2), gju.numberToDegree(lat2)]
+    };
+  };
+
+})();
+
+
+/***/ }),
+/* 22 */
+/* unknown exports provided */
 /* all exports used */
 /*!****************************!*\
   !*** ./~/ieee754/index.js ***!
@@ -30656,7 +31075,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /* unknown exports provided */
 /* all exports used */
 /*!****************************!*\
@@ -30672,7 +31091,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /* unknown exports provided */
 /* all exports used */
 /*!*************************************!*\
@@ -30929,7 +31348,7 @@ function updateLink(linkElement, obj) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /* unknown exports provided */
 /* all exports used */
 /*!************************************!*\
@@ -32489,7 +32908,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscor
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /* unknown exports provided */
 /* all exports used */
 /*!************************************************!*\
@@ -32527,7 +32946,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /* unknown exports provided */
 /* all exports used */
 /*!*********************!*\
@@ -32600,7 +33019,7 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /* unknown exports provided */
 /* all exports used */
 /*!****************************************!*\
@@ -32610,9 +33029,9 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 var Component = __webpack_require__(/*! ../../../../~/vue-loader/lib/component-normalizer */ 0)(
   /* script */
-  __webpack_require__(/*! !!../../../../~/vue-loader/lib/selector?type=script&index=0!./about.vue */ 35),
+  __webpack_require__(/*! !!../../../../~/vue-loader/lib/selector?type=script&index=0!./about.vue */ 36),
   /* template */
-  __webpack_require__(/*! !../../../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-5d62d056"}!../../../../~/vue-loader/lib/selector?type=template&index=0!./about.vue */ 46),
+  __webpack_require__(/*! !../../../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-5d62d056"}!../../../../~/vue-loader/lib/selector?type=template&index=0!./about.vue */ 47),
   /* scopeId */
   null,
   /* cssModules */
@@ -32639,7 +33058,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /* unknown exports provided */
 /* all exports used */
 /*!************************************************!*\
@@ -32649,9 +33068,9 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(/*! ../../../../~/vue-loader/lib/component-normalizer */ 0)(
   /* script */
-  __webpack_require__(/*! !!../../../../~/vue-loader/lib/selector?type=script&index=0!./dynamic-route.vue */ 36),
+  __webpack_require__(/*! !!../../../../~/vue-loader/lib/selector?type=script&index=0!./dynamic-route.vue */ 37),
   /* template */
-  __webpack_require__(/*! !../../../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-f5bcbff8"}!../../../../~/vue-loader/lib/selector?type=template&index=0!./dynamic-route.vue */ 49),
+  __webpack_require__(/*! !../../../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-f5bcbff8"}!../../../../~/vue-loader/lib/selector?type=template&index=0!./dynamic-route.vue */ 50),
   /* scopeId */
   null,
   /* cssModules */
@@ -32678,7 +33097,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /* unknown exports provided */
 /* all exports used */
 /*!***************************************!*\
@@ -32688,9 +33107,9 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(/*! ../../../../~/vue-loader/lib/component-normalizer */ 0)(
   /* script */
-  __webpack_require__(/*! !!../../../../~/vue-loader/lib/selector?type=script&index=0!./form.vue */ 37),
+  __webpack_require__(/*! !!../../../../~/vue-loader/lib/selector?type=script&index=0!./form.vue */ 38),
   /* template */
-  __webpack_require__(/*! !../../../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-c4be4aea"}!../../../../~/vue-loader/lib/selector?type=template&index=0!./form.vue */ 48),
+  __webpack_require__(/*! !../../../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-c4be4aea"}!../../../../~/vue-loader/lib/selector?type=template&index=0!./form.vue */ 49),
   /* scopeId */
   null,
   /* cssModules */
@@ -32717,7 +33136,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /* unknown exports provided */
 /* exports used: default */
 /*!**************************************!*\
@@ -32727,13 +33146,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(/*! !vue-style-loader!css-loader!../../~/vue-loader/lib/style-compiler/index?{"id":"data-v-08f60ba7","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector?type=styles&index=0!./DataStore.vue */ 50)
+__webpack_require__(/*! !vue-style-loader!css-loader!../../~/vue-loader/lib/style-compiler/index?{"id":"data-v-08f60ba7","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector?type=styles&index=0!./DataStore.vue */ 51)
 
 var Component = __webpack_require__(/*! ../../~/vue-loader/lib/component-normalizer */ 0)(
   /* script */
-  __webpack_require__(/*! !!../../~/vue-loader/lib/selector?type=script&index=0!./DataStore.vue */ 38),
+  __webpack_require__(/*! !!../../~/vue-loader/lib/selector?type=script&index=0!./DataStore.vue */ 39),
   /* template */
-  __webpack_require__(/*! !../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-08f60ba7"}!../../~/vue-loader/lib/selector?type=template&index=0!./DataStore.vue */ 42),
+  __webpack_require__(/*! !../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-08f60ba7"}!../../~/vue-loader/lib/selector?type=template&index=0!./DataStore.vue */ 43),
   /* scopeId */
   null,
   /* cssModules */
@@ -32760,7 +33179,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /* unknown exports provided */
 /* exports used: default */
 /*!************************************!*\
@@ -32770,13 +33189,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(/*! !vue-style-loader!css-loader!../../~/vue-loader/lib/style-compiler/index?{"id":"data-v-5bd52e48","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector?type=styles&index=0!./GPSInfo.vue */ 52)
+__webpack_require__(/*! !vue-style-loader!css-loader!../../~/vue-loader/lib/style-compiler/index?{"id":"data-v-5bd52e48","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector?type=styles&index=0!./GPSInfo.vue */ 53)
 
 var Component = __webpack_require__(/*! ../../~/vue-loader/lib/component-normalizer */ 0)(
   /* script */
-  __webpack_require__(/*! !!../../~/vue-loader/lib/selector?type=script&index=0!./GPSInfo.vue */ 39),
+  __webpack_require__(/*! !!../../~/vue-loader/lib/selector?type=script&index=0!./GPSInfo.vue */ 40),
   /* template */
-  __webpack_require__(/*! !../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-5bd52e48"}!../../~/vue-loader/lib/selector?type=template&index=0!./GPSInfo.vue */ 45),
+  __webpack_require__(/*! !../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-5bd52e48"}!../../~/vue-loader/lib/selector?type=template&index=0!./GPSInfo.vue */ 46),
   /* scopeId */
   null,
   /* cssModules */
@@ -32803,7 +33222,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /* unknown exports provided */
 /* exports used: default */
 /*!***************************************!*\
@@ -32813,13 +33232,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(/*! !vue-style-loader!css-loader!../../~/vue-loader/lib/style-compiler/index?{"id":"data-v-c47b8ee4","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector?type=styles&index=0!./GPSTracker.vue */ 53)
+__webpack_require__(/*! !vue-style-loader!css-loader!../../~/vue-loader/lib/style-compiler/index?{"id":"data-v-c47b8ee4","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector?type=styles&index=0!./GPSTracker.vue */ 54)
 
 var Component = __webpack_require__(/*! ../../~/vue-loader/lib/component-normalizer */ 0)(
   /* script */
-  __webpack_require__(/*! !!../../~/vue-loader/lib/selector?type=script&index=0!./GPSTracker.vue */ 40),
+  __webpack_require__(/*! !!../../~/vue-loader/lib/selector?type=script&index=0!./GPSTracker.vue */ 41),
   /* template */
-  __webpack_require__(/*! !../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-c47b8ee4"}!../../~/vue-loader/lib/selector?type=template&index=0!./GPSTracker.vue */ 47),
+  __webpack_require__(/*! !../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-c47b8ee4"}!../../~/vue-loader/lib/selector?type=template&index=0!./GPSTracker.vue */ 48),
   /* scopeId */
   null,
   /* cssModules */
@@ -32846,7 +33265,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /* unknown exports provided */
 /* exports used: default */
 /*!**************************************!*\
@@ -32856,13 +33275,13 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(/*! !vue-style-loader!css-loader!../../~/vue-loader/lib/style-compiler/index?{"id":"data-v-48df88e6","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector?type=styles&index=0!./LeftPanel.vue */ 51)
+__webpack_require__(/*! !vue-style-loader!css-loader!../../~/vue-loader/lib/style-compiler/index?{"id":"data-v-48df88e6","scoped":false,"hasInlineConfig":false}!../../~/vue-loader/lib/selector?type=styles&index=0!./LeftPanel.vue */ 52)
 
 var Component = __webpack_require__(/*! ../../~/vue-loader/lib/component-normalizer */ 0)(
   /* script */
-  __webpack_require__(/*! !!../../~/vue-loader/lib/selector?type=script&index=0!./LeftPanel.vue */ 41),
+  __webpack_require__(/*! !!../../~/vue-loader/lib/selector?type=script&index=0!./LeftPanel.vue */ 42),
   /* template */
-  __webpack_require__(/*! !../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-48df88e6"}!../../~/vue-loader/lib/selector?type=template&index=0!./LeftPanel.vue */ 44),
+  __webpack_require__(/*! !../../~/vue-loader/lib/template-compiler/index?{"id":"data-v-48df88e6"}!../../~/vue-loader/lib/selector?type=template&index=0!./LeftPanel.vue */ 45),
   /* scopeId */
   null,
   /* cssModules */
@@ -32889,7 +33308,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /* exports provided: default */
 /* all exports used */
 /*!************************************************************************!*\
@@ -32899,16 +33318,18 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LeftPanel_vue__ = __webpack_require__(/*! ./components/LeftPanel.vue */ 33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LeftPanel_vue__ = __webpack_require__(/*! ./components/LeftPanel.vue */ 34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_LeftPanel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_LeftPanel_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_GPSInfo_vue__ = __webpack_require__(/*! ./components/GPSInfo.vue */ 31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_GPSInfo_vue__ = __webpack_require__(/*! ./components/GPSInfo.vue */ 32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_GPSInfo_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_GPSInfo_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_GPSTracker_vue__ = __webpack_require__(/*! ./components/GPSTracker.vue */ 32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_GPSTracker_vue__ = __webpack_require__(/*! ./components/GPSTracker.vue */ 33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_GPSTracker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_GPSTracker_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_DataStore_vue__ = __webpack_require__(/*! ./components/DataStore.vue */ 30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_DataStore_vue__ = __webpack_require__(/*! ./components/DataStore.vue */ 31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_DataStore_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_DataStore_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_geojson_tools__ = __webpack_require__(/*! geojson-tools */ 19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_geojson_tools___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_geojson_tools__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_geojson_utils__ = __webpack_require__(/*! geojson-utils */ 21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_geojson_utils___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_geojson_utils__);
 //
 //
 //
@@ -32970,6 +33391,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	
 	
   
+  
 
 	/* harmony default export */ __webpack_exports__["default"] = ({
 		components: {
@@ -32984,7 +33406,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					coords: NaN
 				},
 				trackGPS: false,
-				feature: {}
+				feature: {
+					geometry: {
+						coordinates: [0, 0]
+					}
+				}
 			}
 		},
 		computed: {
@@ -33006,15 +33432,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			position() {
 				let lat = this.position.coords.latitude
 				let lon = this.position.coords.longitude
+				let timestamp = this.position.timestamp
+				console.log("Timestamp es", timestamp)
 				let geometry_val = __WEBPACK_IMPORTED_MODULE_4_geojson_tools___default.a.toGeoJSON([lat, lon], 'Point')
         let aux_feature = {
 					type: 'Feature',
 					geometry: geometry_val,
 					properties: {
-						time: this.position.coords.timestamp
+						time: timestamp
 					}
 				}
-				this.feature = aux_feature
+				if (__WEBPACK_IMPORTED_MODULE_5_geojson_utils___default.a.pointDistance(aux_feature.geometry, this.feature.geometry) > 5) {
+					this.feature = aux_feature
+				} else {
+					alert("Not saving new point")
+				}
 				console.log("Feature es", this.feature)
 			}
 		}
@@ -33022,7 +33454,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /* exports provided: default */
 /* all exports used */
 /*!*******************************************************************************************!*\
@@ -33049,7 +33481,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /* exports provided: default */
 /* all exports used */
 /*!***************************************************************************************************!*\
@@ -33092,7 +33524,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /* exports provided: default */
 /* all exports used */
 /*!******************************************************************************************!*\
@@ -33236,7 +33668,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /* exports provided: default */
 /* all exports used */
 /*!*****************************************************************************************!*\
@@ -33407,7 +33839,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /* exports provided: default */
 /* all exports used */
 /*!***************************************************************************************!*\
@@ -33445,7 +33877,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /* exports provided: default */
 /* all exports used */
 /*!******************************************************************************************!*\
@@ -33507,7 +33939,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /* exports provided: default */
 /* all exports used */
 /*!*****************************************************************************************!*\
@@ -33548,7 +33980,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************************************************************************************************************!*\
@@ -33584,7 +34016,7 @@ if (false) {
 }
 
 /***/ }),
-/* 43 */
+/* 44 */
 /* unknown exports provided */
 /* all exports used */
 /*!****************************************************************************************************************************************!*\
@@ -33669,7 +34101,7 @@ if (false) {
 }
 
 /***/ }),
-/* 44 */
+/* 45 */
 /* unknown exports provided */
 /* all exports used */
 /*!*********************************************************************************************************************************************************!*\
@@ -33733,7 +34165,7 @@ if (false) {
 }
 
 /***/ }),
-/* 45 */
+/* 46 */
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************************************************************************************************!*\
@@ -33753,7 +34185,7 @@ if (false) {
 }
 
 /***/ }),
-/* 46 */
+/* 47 */
 /* unknown exports provided */
 /* all exports used */
 /*!***********************************************************************************************************************************************************!*\
@@ -33787,7 +34219,7 @@ if (false) {
 }
 
 /***/ }),
-/* 47 */
+/* 48 */
 /* unknown exports provided */
 /* all exports used */
 /*!**********************************************************************************************************************************************************!*\
@@ -33807,7 +34239,7 @@ if (false) {
 }
 
 /***/ }),
-/* 48 */
+/* 49 */
 /* unknown exports provided */
 /* all exports used */
 /*!**********************************************************************************************************************************************************!*\
@@ -34052,7 +34484,7 @@ if (false) {
 }
 
 /***/ }),
-/* 49 */
+/* 50 */
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************************************************************************************************************!*\
@@ -34096,7 +34528,7 @@ if (false) {
 }
 
 /***/ }),
-/* 50 */
+/* 51 */
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************************************************************************************************************************************************************************!*\
@@ -34127,7 +34559,7 @@ if(false) {
 }
 
 /***/ }),
-/* 51 */
+/* 52 */
 /* unknown exports provided */
 /* all exports used */
 /*!*******************************************************************************************************************************************************************************************************************************!*\
@@ -34158,7 +34590,7 @@ if(false) {
 }
 
 /***/ }),
-/* 52 */
+/* 53 */
 /* unknown exports provided */
 /* all exports used */
 /*!*****************************************************************************************************************************************************************************************************************************!*\
@@ -34189,7 +34621,7 @@ if(false) {
 }
 
 /***/ }),
-/* 53 */
+/* 54 */
 /* unknown exports provided */
 /* all exports used */
 /*!********************************************************************************************************************************************************************************************************************************!*\

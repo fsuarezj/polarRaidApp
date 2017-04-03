@@ -18,7 +18,6 @@
 export default {
   props: {
     position: {
-      type: Object,
       required: true
     }
   }

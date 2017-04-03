@@ -14,7 +14,7 @@ export default {
     return {
       watchGPSOptions: {
         maximumAge: 3600000,
-        timeout: 3000,
+        timeout: 5000,
         enableHighAccuracy: true,
       },
       watchID: NaN

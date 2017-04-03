@@ -41,7 +41,7 @@
 						<f7-block inner>
 							<p>Here the temperature status</p>
 						</f7-block>
-						<f7-block-title>File saving</f7-block-title>
+						<f7-block-title>Stored points</f7-block-title>
 						<f7-block inner>
 							<pr-data-store :feature="feature"></pr-data-store>
 						</f7-block>
@@ -59,6 +59,7 @@
 	import GPSTracker from './components/GPSTracker.vue'
 	import DataStore from './components/DataStore.vue'
   import gjt from 'geojson-tools'
+  import gju from 'geojson-utils'
 
 	export default {
 		components: {
@@ -73,7 +74,11 @@
 					coords: NaN
 				},
 				trackGPS: false,
-				feature: {}
+				feature: {
+					geometry: {
+						coordinates: [0, 0]
+					}
+				}
 			}
 		},
 		computed: {
@@ -96,7 +101,6 @@
 				let lat = this.position.coords.latitude
 				let lon = this.position.coords.longitude
 				let timestamp = this.position.timestamp
-				console.log("Timestamp es", timestamp)
 				let geometry_val = gjt.toGeoJSON([lat, lon], 'Point')
         let aux_feature = {
 					type: 'Feature',
@@ -105,8 +109,12 @@
 						time: timestamp
 					}
 				}
-				this.feature = aux_feature
-				console.log("Feature es", this.feature)
+				if (gju.pointDistance(aux_feature.geometry, this.feature.geometry) > 10) {
+					this.feature = aux_feature
+					console.log("Saving new point")
+				// } else {
+				// 	console.log("Not saving new point")
+				}
 			}
 		}
 	}

@@ -39,6 +39,7 @@
     "framework7": "^1.5.4",
     "framework7-vue": "^0.8.5",
     "geojson-tools": "^0.2.2",
+    "geojson-utils": "^1.1.0",
     "vue": "^2.2.4"
   }
 }
