@@ -27993,7 +27993,7 @@ exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-ba
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -33520,13 +33520,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 						time: timestamp
 					}
 				}
-				if (__WEBPACK_IMPORTED_MODULE_6_geojson_utils___default.a.pointDistance(aux_feature.geometry, this.feature.geometry) > 20) {
+				console.log("Bg: ", cordova.plugins.backgroundMode.isActive())
+				if ((__WEBPACK_IMPORTED_MODULE_6_geojson_utils___default.a.pointDistance(aux_feature.geometry, this.feature.geometry) > 20) && (this.position.coords.accuracy < 10)) {
 					this.feature = aux_feature
 					console.log("Saving new point")
 				// } else {
 				// 	console.log("Not saving new point")
 				}
 			}
+		},
+		mounted() {
+			document.addEventListener('deviceready', function() {
+				console.log("Enabling background mode")
+				cordova.plugins.backgroundMode.enable()
+				cordova.plugins.backgroundMode.on('activate', function() {
+					cordova.plugins.backgroundMode.disableWebViewOptimizations()
+				})
+			})
 		}
 	});
 
@@ -33775,7 +33785,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       db: NaN,
       databaseName: 'pointsGPS',
-      databaseVersion: 2,
+      databaseVersion: 3,
       openRequest: NaN,
       firebaseConfig: {
         apiKey: "AIzaSyAFs_c-JhZrYY8RoJtqKcxSIfaZQvJ8VVw",
@@ -33820,7 +33830,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     createData() {
       // let feature = { hey: 'hou'}
       let featuresStore = this.db.transaction(['features'], 'readwrite').objectStore('features')
-      let request = featuresStore.add(this.feature)
+      let request = featuresStore.add(this.feature, this.feature.properties.time)
       let elem = this
       request.onerror = function(e) {
         console.error('Error when creating data.', e.target.error)
@@ -33905,7 +33915,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       console.log("Upgraded")
       if(!aux_db.objectStoreNames.contains('features')) {
-        let store = aux_db.createObjectStore('features', {autoIncrement: true})
+        let store = aux_db.createObjectStore('features') //, {autoIncrement: true})
         console.log("Added features object store")
       }
       if(!aux_db.objectStoreNames.contains('sentFeatures')) {
@@ -34092,31 +34102,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   methods: {
     watchTemp() {
-      let a = bluetoothle.initialize(initializeResult, this.watchTempOptions)
-      console.log("Imprimiendo", a)
-      let elem = this
-
-      function initializeResult(result) {
-        console.log("Bluetooth state:", result.status)
-        // if (result.status === 'disabled') {
-        //   console.log(Trying to enable bluetooth)
-          // bluetoothle.enable(enableSuccess, enableError)
-          // function enableSuccess(a) {
-          //   console.log("enableSuccess:", a)
-          // }
-          // function enableError(e) {
-          //   console.log("enableError:", e)
-          // }
-        // }
-        // if (result.status === 'enabled') {
-        //   console.log("Bluetooth enabled")
-        // }
-        // elem.$emit('changedTemp', position)
-      }
-
-      function initializeError(error) {
-        alert('code: '    + error.code    + '\n' +'message: ' + error.message + '\n');
-      }
+      ble.scan([], 5,
+        function(device) {
+          console.log(JSON.stringify(device));
+          console.log("Id:", device.id)
+          if (device.name = "WGX_iBeacon") {
+            let devId = device.id
+            ble.connect(devId,
+              function(result) {
+                console.log("Success connecting:", result)
+                for (let charac of result.characteristics) {
+                  if (charac.properties.indexOf("Read") >= 0) {
+                    console.log("Can read", charac)
+                    let servId = charac.service
+                    let characId = charac.characteristic
+                    ble.read(devId, servId, characId,
+                      function(result) {
+                        console.log("Resultado de", characId, "es", result)
+                      },
+                      function(error) {
+                        console.log("Error leyendo de", characId, "es", error)
+                      }
+                    )
+                  }
+                }
+              },
+              function(error) {
+                console.log("Error connecting:", error)
+              }
+            )
+          }
+        }, function(error) {
+          console.log("Error:", error)
+        }
+      )
+      let deviceId = "EC:74:2E:A6:FA:57"
+      ble.connect(deviceId,
+        function(result) {
+          console.log("Success:", result)
+        },
+        function(error) {
+          console.log("Error:", error)
+        }
+      )
     },
     unwatchPosition() {
       navigator.geolocation.clearWatch(this.watchID)

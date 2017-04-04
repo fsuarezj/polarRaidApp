@@ -17,7 +17,7 @@ export default {
     return {
       db: NaN,
       databaseName: 'pointsGPS',
-      databaseVersion: 2,
+      databaseVersion: 3,
       openRequest: NaN,
       firebaseConfig: {
         apiKey: "AIzaSyAFs_c-JhZrYY8RoJtqKcxSIfaZQvJ8VVw",
@@ -62,7 +62,7 @@ export default {
     createData() {
       // let feature = { hey: 'hou'}
       let featuresStore = this.db.transaction(['features'], 'readwrite').objectStore('features')
-      let request = featuresStore.add(this.feature)
+      let request = featuresStore.add(this.feature, this.feature.properties.time)
       let elem = this
       request.onerror = function(e) {
         console.error('Error when creating data.', e.target.error)
@@ -147,7 +147,7 @@ export default {
 
       console.log("Upgraded")
       if(!aux_db.objectStoreNames.contains('features')) {
-        let store = aux_db.createObjectStore('features', {autoIncrement: true})
+        let store = aux_db.createObjectStore('features') //, {autoIncrement: true})
         console.log("Added features object store")
       }
       if(!aux_db.objectStoreNames.contains('sentFeatures')) {

@@ -45,6 +45,23 @@ module.exports = [
         "clobbers": [
             "ble"
         ]
+    },
+    {
+        "id": "cordova-plugin-device.device",
+        "file": "plugins/cordova-plugin-device/www/device.js",
+        "pluginId": "cordova-plugin-device",
+        "clobbers": [
+            "device"
+        ]
+    },
+    {
+        "id": "cordova-plugin-background-mode.BackgroundMode",
+        "file": "plugins/cordova-plugin-background-mode/www/background-mode.js",
+        "pluginId": "cordova-plugin-background-mode",
+        "clobbers": [
+            "cordova.plugins.backgroundMode",
+            "plugin.backgroundMode"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -56,7 +73,9 @@ module.exports.metadata =
     "cordova-plugin-bluetoothle": "4.3.1",
     "com.firebase.sdk": "3.0.4.2",
     "cordova-plugin-firebase": "0.1.19",
-    "cordova-plugin-ble-central": "1.1.4"
+    "cordova-plugin-ble-central": "1.1.4",
+    "cordova-plugin-device": "1.1.5",
+    "cordova-plugin-background-mode": "0.7.2"
 };
 // BOTTOM OF METADATA
 });

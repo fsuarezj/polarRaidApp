@@ -33520,13 +33520,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 						time: timestamp
 					}
 				}
-				if (__WEBPACK_IMPORTED_MODULE_6_geojson_utils___default.a.pointDistance(aux_feature.geometry, this.feature.geometry) > 20) {
+				console.log("Bg: ", cordova.plugins.backgroundMode.isActive())
+				if ((__WEBPACK_IMPORTED_MODULE_6_geojson_utils___default.a.pointDistance(aux_feature.geometry, this.feature.geometry) > 20) && (this.position.coords.accuracy < 10)) {
 					this.feature = aux_feature
 					console.log("Saving new point")
 				// } else {
 				// 	console.log("Not saving new point")
 				}
 			}
+		},
+		mounted() {
+			document.addEventListener('deviceready', function() {
+				console.log("Enabling background mode")
+				cordova.plugins.backgroundMode.enable()
+				cordova.plugins.backgroundMode.on('activate', function() {
+					cordova.plugins.backgroundMode.disableWebViewOptimizations()
+				})
+			})
 		}
 	});
 
@@ -33775,7 +33785,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       db: NaN,
       databaseName: 'pointsGPS',
-      databaseVersion: 2,
+      databaseVersion: 3,
       openRequest: NaN,
       firebaseConfig: {
         apiKey: "AIzaSyAFs_c-JhZrYY8RoJtqKcxSIfaZQvJ8VVw",
@@ -33820,7 +33830,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     createData() {
       // let feature = { hey: 'hou'}
       let featuresStore = this.db.transaction(['features'], 'readwrite').objectStore('features')
-      let request = featuresStore.add(this.feature)
+      let request = featuresStore.add(this.feature, this.feature.properties.time)
       let elem = this
       request.onerror = function(e) {
         console.error('Error when creating data.', e.target.error)
@@ -33905,7 +33915,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       console.log("Upgraded")
       if(!aux_db.objectStoreNames.contains('features')) {
-        let store = aux_db.createObjectStore('features', {autoIncrement: true})
+        let store = aux_db.createObjectStore('features') //, {autoIncrement: true})
         console.log("Added features object store")
       }
       if(!aux_db.objectStoreNames.contains('sentFeatures')) {

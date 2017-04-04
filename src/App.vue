@@ -124,13 +124,23 @@
 						time: timestamp
 					}
 				}
-				if (gju.pointDistance(aux_feature.geometry, this.feature.geometry) > 20) {
+				console.log("Bg: ", cordova.plugins.backgroundMode.isActive())
+				if ((gju.pointDistance(aux_feature.geometry, this.feature.geometry) > 20) && (this.position.coords.accuracy < 10)) {
 					this.feature = aux_feature
 					console.log("Saving new point")
 				// } else {
 				// 	console.log("Not saving new point")
 				}
 			}
+		},
+		mounted() {
+			document.addEventListener('deviceready', function() {
+				console.log("Enabling background mode")
+				cordova.plugins.backgroundMode.enable()
+				cordova.plugins.backgroundMode.on('activate', function() {
+					cordova.plugins.backgroundMode.disableWebViewOptimizations()
+				})
+			})
 		}
 	}
 </script>

@@ -24,10 +24,16 @@
         },
         "cordova-plugin-ble-central": {
             "PACKAGE_NAME": "com.elPueblin.polarRaidTracking"
+        },
+        "cordova-plugin-background-mode": {
+            "PACKAGE_NAME": "com.elPueblin.polarRaidTracking"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.elPueblin.polarRaidTracking"
+        },
+        "cordova-plugin-device": {
             "PACKAGE_NAME": "com.elPueblin.polarRaidTracking"
         }
     }
