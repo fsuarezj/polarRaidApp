@@ -27993,7 +27993,7 @@ exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-ba
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -33478,7 +33478,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					geometry: {
 						coordinates: [0, 0]
 					}
-				}
+				},
+				temp: NaN
 			}
 		},
 		computed: {
@@ -34097,54 +34098,92 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         "statusReceiver": false,
         "restoreKey" : "PolarRaidTracking"
       },
+      device: {
+        ids: ["EC:74:2E:A6:FA:57", "FF:2C:6B:6D:20:B4"],
+        service: "ffb0",
+        measurement: "ffb3"
+      },
       watchID: NaN
     }
   },
   methods: {
     watchTemp() {
-      ble.scan([], 5,
-        function(device) {
-          console.log(JSON.stringify(device));
-          console.log("Id:", device.id)
-          if (device.name = "WGX_iBeacon") {
-            let devId = device.id
-            ble.connect(devId,
-              function(result) {
-                console.log("Success connecting:", result)
-                for (let charac of result.characteristics) {
-                  if (charac.properties.indexOf("Read") >= 0) {
-                    console.log("Can read", charac)
-                    let servId = charac.service
-                    let characId = charac.characteristic
-                    ble.read(devId, servId, characId,
-                      function(result) {
-                        console.log("Resultado de", characId, "es", result)
-                      },
-                      function(error) {
-                        console.log("Error leyendo de", characId, "es", error)
-                      }
-                    )
-                  }
-                }
-              },
-              function(error) {
-                console.log("Error connecting:", error)
-              }
-            )
-          }
-        }, function(error) {
-          console.log("Error:", error)
-        }
-      )
-      let deviceId = "EC:74:2E:A6:FA:57"
-      ble.connect(deviceId,
-        function(result) {
-          console.log("Success:", result)
-        },
-        function(error) {
-          console.log("Error:", error)
-        }
-      )
+      document.addEventListener('deviceready', this.onDeviceReady, false)
+      //   function(device) {
+      //     console.log(JSON.stringify(device));
+      //     console.log("Id:", device.id)
+      //     if (device.name = "WGX_iBeacon") {
+      //       let devId = device.id
+      //       ble.connect(devId,
+      //         function(result) {
+      //           console.log("Success connecting:", result)
+      //           for (let charac of result.characteristics) {
+      //             if (charac.properties.indexOf("Read") >= 0) {
+      //               console.log("Can read", charac)
+      //               let servId = charac.service
+      //               let characId = charac.characteristic
+      //               ble.read(devId, servId, characId,
+      //                 function(result) {
+      //                   console.log("Resultado de", characId, "es", result)
+      //                 },
+      //                 function(error) {
+      //                   console.log("Error leyendo de", characId, "es", error)
+      //                 }
+      //               )
+      //             }
+      //           }
+      //           ble.read("ffb0", )
+      //         },
+      //         function(error) {
+      //           console.log("Error connecting:", error)
+      //         }
+      //       )
+      //     }
+      //   }, function(error) {
+      //     console.log("Error:", error)
+      //   }
+      // )
+      // let deviceId = "EC:74:2E:A6:FA:57"
+      // ble.connect(deviceId,
+      //   function(result) {
+      //     console.log("Success:", result)
+      //   },
+      //   function(error) {
+      //     console.log("Error:", error)
+      //   }
+      // )
+    },
+    onDeviceReady() {
+      console.log("Device Ready")
+      ble.scan([], 15, this.onScan, this.scanFailure)
+    },
+    onScan(peripheral) {
+      console.log("Scanned")
+      if (this.device.ids.indexOf(peripheral.id) >= 0) {
+        ble.connect(peripheral.id, this.onConnect, this.onDisconnect)
+      } else {
+        console.log("Found another sensor:", peripheral.id)
+      }
+    },
+    scanFailure(error) {
+      console.error("Scan failed:", error)
+    },
+    onConnect(peripheral) {
+      console.log("Connected")
+      ble.read(peripheral.id, this.device.service, this.device.measurement, this.onData, this.onError)
+      ble.startNotification(peripheral.id, this.device.service, this.device.measurement, this.onData, this.onError)
+    },
+    onDisconnect(reason) {
+      console.error("BLE Disconnected", reason)
+    },
+    onData(buffer) {
+      console.log("Data found")
+      let data = new Uint8Array(buffer)
+      console.log("Data =", data[0])
+      this.$emit('changedTemp', data[0])
+    },
+    onError(error) {
+      console.error("There was an error:", error)
     },
     unwatchPosition() {
       navigator.geolocation.clearWatch(this.watchID)
@@ -34264,7 +34303,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "inner": ""
     }
-  }, [_c('p', [_vm._v("Here the temperature status")])]), _vm._v(" "), _c('f7-block-title', [_vm._v("Stored points")]), _vm._v(" "), _c('f7-block', {
+  }, [_c('p', [_vm._v("Temperature is " + _vm._s(_vm.temp) + " ℃")])]), _vm._v(" "), _c('f7-block-title', [_vm._v("Stored points")]), _vm._v(" "), _c('f7-block', {
     attrs: {
       "inner": ""
     }

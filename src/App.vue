@@ -40,7 +40,7 @@
 						</f7-block>
 						<f7-block-title>Temperature status</f7-block-title>
 						<f7-block inner>
-							<p>Here the temperature status</p>
+							<p v-if="temp">Temperature is {{ temp }}&#x2103</p>
 						</f7-block>
 						<f7-block-title>Stored points</f7-block-title>
 						<f7-block inner>
@@ -82,7 +82,8 @@
 					geometry: {
 						coordinates: [0, 0]
 					}
-				}
+				},
+				temp: NaN
 			}
 		},
 		computed: {
