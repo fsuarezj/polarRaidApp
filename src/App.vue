@@ -40,7 +40,8 @@
 						</f7-block>
 						<f7-block-title>Temperature status</f7-block-title>
 						<f7-block inner>
-							<p v-if="temp">Temperature is {{ temp }}&#x2103</p>
+							<p v-if="temps['Sensor 1']">Temperature for Sensor 1 is {{ temps['Sensor 1'] }}&#x2103</p>
+							<p v-if="temps['Sensor 2']">Temperature for Sensor 2 is {{ temps['Sensor 2'] }}&#x2103</p>
 						</f7-block>
 						<f7-block-title>Stored points</f7-block-title>
 						<f7-block inner>
@@ -83,7 +84,10 @@
 						coordinates: [0, 0]
 					}
 				},
-				temp: NaN
+				temps: {
+					"Sensor 1": NaN,
+					"Sensor 2": NaN
+				}
 			}
 		},
 		computed: {
@@ -107,9 +111,9 @@
 				console.log("Position is:", position)
 				this.position = position
 			},
-			changeTemp(temp) {
-				console.log("Temperature is:", temp)
-				this.temp = temp
+			changeTemp(sensorData) {
+				console.log("Temperature for", sensorData.sensor,"is", sensorData.temp)
+				this.temps[sensorData.sensor] = sensorData.temp
 			},
 		},
 		watch: {
@@ -122,7 +126,9 @@
 					type: 'Feature',
 					geometry: geometry_val,
 					properties: {
-						time: timestamp
+						time: timestamp,
+						temp1: this.temps["Sensor 1"],
+						temp2: this.temps["Sensor 2"]
 					}
 				}
 				console.log("Bg: ", cordova.plugins.backgroundMode.isActive())

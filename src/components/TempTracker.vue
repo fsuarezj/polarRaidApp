@@ -17,6 +17,10 @@ export default {
         "statusReceiver": false,
         "restoreKey" : "PolarRaidTracking"
       },
+			sensorIds: {
+       	"EC:74:2E:A6:FA:57": "Sensor 1",
+				"FF:2C:6B:6D:20:B4": "Sensor 2"
+			},
       device: {
         ids: ["EC:74:2E:A6:FA:57", "FF:2C:6B:6D:20:B4"],
         service: "ffb0",
@@ -28,49 +32,6 @@ export default {
   methods: {
     watchTemp() {
       document.addEventListener('deviceready', this.onDeviceReady, false)
-      //   function(device) {
-      //     console.log(JSON.stringify(device));
-      //     console.log("Id:", device.id)
-      //     if (device.name = "WGX_iBeacon") {
-      //       let devId = device.id
-      //       ble.connect(devId,
-      //         function(result) {
-      //           console.log("Success connecting:", result)
-      //           for (let charac of result.characteristics) {
-      //             if (charac.properties.indexOf("Read") >= 0) {
-      //               console.log("Can read", charac)
-      //               let servId = charac.service
-      //               let characId = charac.characteristic
-      //               ble.read(devId, servId, characId,
-      //                 function(result) {
-      //                   console.log("Resultado de", characId, "es", result)
-      //                 },
-      //                 function(error) {
-      //                   console.log("Error leyendo de", characId, "es", error)
-      //                 }
-      //               )
-      //             }
-      //           }
-      //           ble.read("ffb0", )
-      //         },
-      //         function(error) {
-      //           console.log("Error connecting:", error)
-      //         }
-      //       )
-      //     }
-      //   }, function(error) {
-      //     console.log("Error:", error)
-      //   }
-      // )
-      // let deviceId = "EC:74:2E:A6:FA:57"
-      // ble.connect(deviceId,
-      //   function(result) {
-      //     console.log("Success:", result)
-      //   },
-      //   function(error) {
-      //     console.log("Error:", error)
-      //   }
-      // )
     },
     onDeviceReady() {
       console.log("Device Ready")
@@ -88,21 +49,44 @@ export default {
       console.error("Scan failed:", error)
     },
     onConnect(peripheral) {
-      console.log("Connected")
-      ble.read(peripheral.id, this.device.service, this.device.measurement, this.onData, this.onError)
-      ble.startNotification(peripheral.id, this.device.service, this.device.measurement, this.onData, this.onError)
+      if (this.device.ids.indexOf(peripheral.id) === 0) {
+        console.log("Connected to Sensor 1")
+        ble.read(peripheral.id, this.device.service, this.device.measurement, this.onData1, this.onError1)
+        ble.startNotification(peripheral.id, this.device.service, this.device.measurement, this.onData1, this.onError1)
+      } else if (this.device.ids.indexOf(peripheral.id) === 1) {
+        console.log("Connected to Sensor 2")
+        ble.read(peripheral.id, this.device.service, this.device.measurement, this.onData2, this.onError2)
+        ble.startNotification(peripheral.id, this.device.service, this.device.measurement, this.onData2, this.onError2)
+      } else {
+        console.error("Error: Trying to connect to a non-registered device")
+      }
     },
     onDisconnect(reason) {
       console.error("BLE Disconnected", reason)
     },
-    onData(buffer) {
-      console.log("Data found")
-      let data = new Uint8Array(buffer)
-      console.log("Data =", data[0])
-      this.$emit('changedTemp', data[0])
+    onData1(buffer) {
+      console.log("Data for Sensor 1 found")
+      let data = new Int8Array(buffer)
+      console.log("Data =", data)
+      this.$emit('changedTemp', {
+        sensor: "Sensor 1",
+        temp: data[0]
+      })
     },
-    onError(error) {
-      console.error("There was an error:", error)
+    onData2(buffer) {
+      console.log("Data for Sensor 2 found")
+      let data = new Int8Array(buffer)
+      console.log("Data =", data)
+      this.$emit('changedTemp', {
+        sensor: "Sensor 2",
+        temp: data[0]
+      })
+    },
+    onError1(error) {
+      console.error("There was an error reading from Sensor 1:", error)
+    },
+    onError2(error) {
+      console.error("There was an error reading from Sensor 2:", error)
     },
     unwatchPosition() {
       navigator.geolocation.clearWatch(this.watchID)
