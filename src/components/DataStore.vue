@@ -68,7 +68,7 @@ export default {
         console.error('Error when creating data.', e.target.error)
       }
       request.onsuccess = function(e) {
-        console.log("Data written to indexedDB")
+        console.log("Data written to indexedDB:")
         elem.saveData2Firebase()
       }
     },
@@ -101,7 +101,6 @@ export default {
                 console.error('error when adding data to sent features.', e1.target.error)
               }
               request.onsuccess = function(e1) {
-                console.log("Va a meter", aux_feat.geometry.coordinates, "en", elem.savedPoints)
                 elem.savedPoints.push(aux_feat.geometry.coordinates)
                 let request = featuresStoreRw.delete(k)
                 request.onerror = function(e2) {

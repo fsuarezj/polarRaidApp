@@ -127,14 +127,14 @@
 					geometry: geometry_val,
 					properties: {
 						time: timestamp,
-						temp1: this.temps["Sensor 1"],
-						temp2: this.temps["Sensor 2"]
+						temp1: this.temps["Sensor 1"]? this.temps["Sensor 1"]:"",
+						temp2: this.temps["Sensor 2"]? this.temps["Sensor 2"]:""
 					}
 				}
 				console.log("Bg: ", cordova.plugins.backgroundMode.isActive())
-				if ((gju.pointDistance(aux_feature.geometry, this.feature.geometry) > 20) && (this.position.coords.accuracy < 10)) {
+				if ((gju.pointDistance(aux_feature.geometry, this.feature.geometry) > 20) && (this.position.coords.accuracy <= 15)) {
 					this.feature = aux_feature
-					console.log("Saving new point")
+					console.log("Saving new point", aux_feature)
 				// } else {
 				// 	console.log("Not saving new point")
 				}

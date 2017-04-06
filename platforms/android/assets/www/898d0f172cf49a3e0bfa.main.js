@@ -27936,7 +27936,7 @@ exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-ba
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -27993,7 +27993,7 @@ exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-ba
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -33522,13 +33522,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					type: 'Feature',
 					geometry: geometry_val,
 					properties: {
-						time: timestamp
+						time: timestamp,
+						temp1: this.temps["Sensor 1"]? this.temps["Sensor 1"]:"",
+						temp2: this.temps["Sensor 2"]? this.temps["Sensor 2"]:""
 					}
 				}
 				console.log("Bg: ", cordova.plugins.backgroundMode.isActive())
-				if ((__WEBPACK_IMPORTED_MODULE_6_geojson_utils___default.a.pointDistance(aux_feature.geometry, this.feature.geometry) > 20) && (this.position.coords.accuracy < 10)) {
+				if ((__WEBPACK_IMPORTED_MODULE_6_geojson_utils___default.a.pointDistance(aux_feature.geometry, this.feature.geometry) > 20) && (this.position.coords.accuracy <= 15)) {
 					this.feature = aux_feature
-					console.log("Saving new point")
+					console.log("Saving new point", aux_feature)
 				// } else {
 				// 	console.log("Not saving new point")
 				}
@@ -33841,7 +33843,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.error('Error when creating data.', e.target.error)
       }
       request.onsuccess = function(e) {
-        console.log("Data written to indexedDB")
+        console.log("Data written to indexedDB:")
         elem.saveData2Firebase()
       }
     },
@@ -33874,7 +33876,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.error('error when adding data to sent features.', e1.target.error)
               }
               request.onsuccess = function(e1) {
-                console.log("Va a meter", aux_feat.geometry.coordinates, "en", elem.savedPoints)
                 elem.savedPoints.push(aux_feat.geometry.coordinates)
                 let request = featuresStoreRw.delete(k)
                 request.onerror = function(e2) {
@@ -34136,9 +34137,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     onConnect(peripheral) {
       if (this.device.ids.indexOf(peripheral.id) === 0) {
         console.log("Connected to Sensor 1")
+        ble.read(peripheral.id, this.device.service, this.device.measurement, this.onData1, this.onError1)
         ble.startNotification(peripheral.id, this.device.service, this.device.measurement, this.onData1, this.onError1)
       } else if (this.device.ids.indexOf(peripheral.id) === 1) {
         console.log("Connected to Sensor 2")
+        ble.read(peripheral.id, this.device.service, this.device.measurement, this.onData2, this.onError2)
         ble.startNotification(peripheral.id, this.device.service, this.device.measurement, this.onData2, this.onError2)
       } else {
         console.error("Error: Trying to connect to a non-registered device")
